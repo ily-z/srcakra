@@ -11,15 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('slots', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-
-            $table->date('date');
-            $table->time('start_time');
-            $table->time('end_time');
-
-            $table->integer('capacity');
-
+        Schema::create('tabel_payment', function (Blueprint $table) {
+            $table->id();
             $table->timestamps();
         });
     }
@@ -29,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('slots');
+        Schema::dropIfExists('tabel_payment');
     }
 };
