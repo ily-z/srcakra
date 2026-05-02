@@ -1,78 +1,83 @@
-<!-- resources/views/booking/index.blade.php -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Reservasi Kunjungan</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100">
+import React, { useState } from 'react';
+import { useForm } from '@inertiajs/react';
 
-<div class="max-w-2xl mx-auto mt-10 bg-white p-6 rounded-xl shadow">
+export default function RegisterForm() {
+    const { data, setData, post } = useForm({
+        jenis: 'personal', // default
+        nama: '',
+        nama_instansi: '',
+        email: '',
+        method: 'cash',
+        // ... field lainnya
+    });
 
-    <h1 class="text-2xl font-bold mb-6">Reservasi Kunjungan Museum</h1>
+    return (
+        <div className="bg-gray-100 min-h-screen p-10">
+            <div className="bg-white max-w-xl mx-auto rounded-xl shadow p-8">
+                <h1 className="text-xl font-bold mb-6">Form Pendaftaran Kunjungan</h1>
+                
+                <div className="mb-4">
+                    <label className="block text-sm font-medium">Jenis Kunjungan</label>
+                    <select 
+                        className="w-full mt-1 border-gray-300 rounded-md"
+                        value={data.jenis} 
+                        onChange={e => setData('jenis', e.target.value)}
+                    >
+                        <option value="personal">Personal / Individu</option>
+                        <option value="instansi">Instansi / Rombongan</option>
+                    </select>
+                </div>
 
-    <form method="POST" action="/reservations" enctype="multipart/form-data">
-        @csrf
+                {/* Kondisional Nama vs Instansi */}
+                {data.jenis === 'personal' ? (
+                    <div className="mb-4">
+                        <label className="block text-sm">Nama Lengkap</label>
+                        <input type="text" className="w-full border-gray-300 rounded" 
+                            onChange={e => setData('nama', e.target.value)} />
+                    </div>
+                ) : (
+                    <>
+                        <div className="mb-4">
+                            <label className="block text-sm">Nama Instansi</label>
+                            <input type="text" className="w-full border-gray-300 rounded" 
+                                onChange={e => setData('nama_instansi', e.target.value)} />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-sm">Jumlah Pengunjung</label>
+                            <input type="number" min="1" className="w-full border-gray-300 rounded" 
+                                onChange={e => setData('jumlah_pengunjung', e.target.value)} />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-sm">Surat Pengajuan (PDF)</label>
+                            <input type="file" className="w-full text-sm" 
+                                onChange={e => setData('surat_pengajuan', e.target.files[0])} />
+                        </div>
+                    </>
+                )}
 
-        <!-- Nama -->
-        <div class="mb-4">
-            <label class="block font-medium">Nama</label>
-            <input type="text" name="nama" class="w-full border p-2 rounded" required>
+                <div className="mb-6 p-4 bg-blue-50 rounded-lg">
+                    <p className="text-sm font-semibold mb-2">Metode Pembayaran</p>
+                    <div className="flex gap-4">
+                        <label className="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="method" value="cash" checked={data.method === 'cash'} 
+                                onChange={e => setData('method', e.target.value)} />
+                            <span>Cash (Bayar di Tempat)</span>
+                        </label>
+                        <label className="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="method" value="midtrans" 
+                                onChange={e => setData('method', e.target.value)} />
+                            <span>Online Payment (Midtrans)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button 
+                    onClick={() => post('/submit-pendaftaran')}
+                    className="w-full bg-indigo-600 text-white py-3 rounded-lg font-bold hover:bg-indigo-700"
+                >
+                    {data.method === 'cash' ? 'Daftar & Terima Kwitansi' : 'Lanjut ke Pembayaran'}
+                </button>
+            </div>
         </div>
-
-        <!-- Email -->
-        <div class="mb-4">
-            <label class="block font-medium">Email</label>
-            <input type="email" name="email" class="w-full border p-2 rounded">
-        </div>
-
-        <!-- Instansi -->
-        <div class="mb-4">
-            <label class="block font-medium">Nama Instansi</label>
-            <input type="text" name="nama_instansi" class="w-full border p-2 rounded">
-        </div>
-
-        <!-- Tanggal -->
-        <div class="mb-4">
-            <label class="block font-medium">Tanggal Kunjungan</label>
-            <input type="date" name="tanggal" class="w-full border p-2 rounded" required>
-        </div>
-
-        <!-- Slot -->
-        <div class="mb-4">
-            <label class="block font-medium">Pilih Slot</label>
-            <select name="slot_id" class="w-full border p-2 rounded" required>
-                @foreach($slots as $slot)
-                    <option value="{{ $slot->id }}">
-                        {{ $slot->start_time }} - {{ $slot->end_time }} (Sisa: {{ $slot->capacity }})
-                    </option>
-                @endforeach
-            </select>
-        </div>
-
-        <!-- Jumlah -->
-        <div class="mb-4">
-            <label class="block font-medium">Jumlah Kunjungan</label>
-            <input type="number" name="jumlah_kunjungan" class="w-full border p-2 rounded" min="1" required>
-        </div>
-
-        <!-- Tujuan -->
-        <div class="mb-4">
-            <label class="block font-medium">Tujuan</label>
-            <textarea name="tujuan" class="w-full border p-2 rounded"></textarea>
-        </div>
-
-        <!-- Upload Surat -->
-        <div class="mb-4">
-            <label class="block font-medium">Surat Pengajuan</label>
-            <input type="file" name="surat_pengajuan" class="w-full">
-        </div>
-
-        <button class="bg-blue-600 text-white px-4 py-2 rounded w-full">
-            Booking Sekarang
-        </button>
-    </form>
-</div>
-
-</body>
-</html>
+    );
+}

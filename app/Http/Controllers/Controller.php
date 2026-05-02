@@ -53,7 +53,6 @@ private function moveToKunjungan($pendaftar, $payment) {
         'qr_token' => bin2hex(random_bytes(16)), // Generate random token
     ]);
 }
-
     public function create()
     {
         $slots = Slot::all();
