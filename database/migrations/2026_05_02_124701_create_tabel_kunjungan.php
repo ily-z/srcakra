@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('email');
             $table->integer('jumlah_pengunjung');
             $table->string('payment_method');
-            $table->foreignId('id_payment')->constrained('tabel_payments', 'id_payment');
+            $table->foreignId('id_payment')->constrained('tabel_payment', 'id_payment');
             $table->enum('status_kunjungan', ['waiting', 'checked_in'])->default('waiting');
             $table->string('qr_token text')->unique(); // Token unik untuk QR
             $table->timestamps();
