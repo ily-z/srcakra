@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('nama_instansi')->nullable(); // null jika personal
             $table->text('alamat');
             $table->string('email');
+            $table->string('metode_pembayaran');
             $table->text('tujuan_kunjungan');
             $table->string('surat_pengajuan')->nullable();
             $table->integer('jumlah_pengunjung')->default(1);
