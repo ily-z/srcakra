@@ -12,18 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tabel_pendaftar', function (Blueprint $table) {
-           $table->id('id_pendaftar');
+            $table->id('id_pendaftar');
             $table->enum('jenis_pendaftar', ['personal', 'instansi']);
             $table->date('tanggal_daftar');
             $table->date('tanggal_kunjungan');
-            $table->string('nama')->nullable(); // null jika instansi
-            $table->string('nama_instansi')->nullable(); // null jika personal
+            $table->string('nama')->nullable();
+            $table->string('nama_instansi')->nullable();
             $table->text('alamat');
             $table->string('email');
-            $table->string('metode_pembayaran');
             $table->text('tujuan_kunjungan');
             $table->string('surat_pengajuan')->nullable();
             $table->integer('jumlah_pengunjung')->default(1);
+            $table->enum('status_pengajuan', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->string('catatan_admin')->nullable();
             $table->timestamps();
         });
     }

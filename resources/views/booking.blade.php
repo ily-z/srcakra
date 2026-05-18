@@ -22,11 +22,12 @@
         <input type="number" class="w-full mb-3 p-3 border rounded" placeholder="Jumlah Orang">
 
         <button class="bg-[#5C4033] text-white px-6 py-3 rounded mt-4">
-            Booking Sekarang
+            <div class="item-center">
+                <p class="text-center">
+                    Booking Sekarang
+                </p>
+            </div>
         </button>
-
     </form>
-
 </div>
-
 @endsection

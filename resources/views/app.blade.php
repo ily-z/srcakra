@@ -1,16 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <title>Museum Cakraningrat</title>
-    @vite('resources/css/app.css')
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ config('app.name', 'Museum Cakraningrat') }}</title>
+    @vite(['resources/css/app.css', 'resources/js/app.tsx'])
 </head>
-<body class="bg-[#F5F5DC]">
-
-    <x-navbar />
-
-    <main class="max-w-4xl mx-auto p-6">
-        @yield('content')
-    </main>
-
+<body class="min-h-screen bg-[#F5F5DC] text-slate-800 antialiased">
+    @inertia
 </body>
 </html>

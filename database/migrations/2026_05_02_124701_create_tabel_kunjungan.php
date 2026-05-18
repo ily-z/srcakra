@@ -13,14 +13,18 @@ return new class extends Migration
     {
         Schema::create('tabel_kunjungan', function (Blueprint $table) {
             $table->id('id_pengunjung');
+            $table->date('tanggal_daftar');
             $table->date('tanggal_kunjungan');
-            $table->string('nama_display'); // Gabungan nama atau instansi
+            $table->string('nama')->nullable();
+            $table->string('nama_instansi')->nullable();
             $table->string('email');
-            $table->integer('jumlah_pengunjung');
+            $table->text('tujuan_kunjungan');
+            $table->string('surat_pengajuan')->nullable();
+            $table->integer('jumlah_pengunjung')->default(1);
             $table->string('payment_method');
             $table->foreignId('id_payment')->constrained('tabel_payment', 'id_payment');
-            $table->enum('status_kunjungan', ['waiting', 'checked_in'])->default('waiting');
-            $table->string('qr_token text')->unique(); // Token unik untuk QR
+            $table->enum('status_kunjungan', ['waiting', 'completed'])->default('waiting');
+            $table->string('qr_token')->unique();
             $table->timestamps();
         });
     }

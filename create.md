@@ -48,13 +48,14 @@
 ### on payment method
 
 - cash
-- online payment:
+- online payment (biaya admin di bebankan pada pelanggan):
     - dana
     - gopay
     - shoppe
     - 
 
 ### Admin UI pages
+login admin
 
 navbar: 
 
@@ -66,35 +67,39 @@ navbar:
 - Qr scanner
 - 
 
-analitik: 
+page analitik: 
 
 - chart kunjungan
 - total pendapatan perbulan
 - ‘kunjungan selesai’
 - ‘kunjungan diajukan’
 
-pangajuan:
+page pengajuan:
 
 - list pengajuan(actions: approve, reject, view doc on instansi)
     - action add with detail, *example: **approve**: kunjungan bisa dilaksakan; **reject**: museum tutup*
 
-pembayaran:
+page pembayaran:
 
 - list pembayaran per kunjungan(pending, done)
 
-history kunjungan:
+page history kunjungan:
 
 - kunjungan yg sudah selesai after qrscan(see details)
 
-Qr_scaner:
+page Qr_scaner:
 
 - scanner(open camera)
 
 ### UI user/customer/pengunjung
 
-*direct to form*
+**main UI**
+
+tabel kalender untuk melihat kunjungan dalam sebulan
 
 Form:
+
+*toggle dual form instansi dan personal*
 
 - tanggal_kunjungan
 - nama(none on instansi)
@@ -104,13 +109,16 @@ Form:
 - tujuan_kunjungan
 - surat pengajuan(none on personal)
 - jumlah pengunjung(none on personal) terhitung 1
+- button pilihan metode pembayaran(online / cash)
 
-Next → approve(pembayararan cash approve sendiri)
+button ‘mengajukan’
 
-        → di tolak
+*approve / reject  dari admin*
 
-online payment gateway(midtrans)
+request payment dari admin
 
 kwitansi + QR code generate
 
-send invoice & QR to email & wa
+jika pembayaran cash maka approve manual setelah menerima pembayaran cash di tempat
+
+automatic send invoice & QR to email & wa
