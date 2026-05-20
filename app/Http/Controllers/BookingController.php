@@ -8,6 +8,7 @@ use App\Models\DisableDay;
 use App\Models\Kunjungan;
 use App\Models\Payment;
 use App\Models\Pendaftar;
+use App\Services\FonnteService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -120,6 +121,7 @@ class BookingController extends Controller
             'nama_instansi' => ['nullable', 'string', 'max:255'],
             'alamat' => ['required', 'string'],
             'email' => ['required', 'email', 'max:255'],
+            'no_wa' => ['nullable', 'string', 'max:20'],
             'tujuan_kunjungan' => ['required', 'string'],
             'surat_pengajuan' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
             'jumlah_pengunjung' => ['nullable', 'integer', 'min:1'],
@@ -159,6 +161,7 @@ class BookingController extends Controller
                 'nama_instansi' => $isPersonal ? null : $validated['nama_instansi'],
                 'alamat' => $validated['alamat'],
                 'email' => $validated['email'],
+                'no_wa' => $validated['no_wa'] ?? null,
                 'tujuan_kunjungan' => $validated['tujuan_kunjungan'],
                 'surat_pengajuan' => $suratPath,
                 'jumlah_pengunjung' => $jumlahPengunjung,
@@ -181,6 +184,14 @@ class BookingController extends Controller
             Mail::to($pendaftar->email)->send(new PengajuanDiterima($payment));
         } catch (\Throwable) {
             // Keep booking flow non-blocking when mail server is unavailable.
+        }
+
+        if ($pendaftar->no_wa) {
+            try {
+                FonnteService::sendPengajuan($payment);
+            } catch (\Throwable) {
+                // Keep booking flow non-blocking when WhatsApp server is unavailable.
+            }
         }
 
         return redirect()->route('booking.payment', $payment->id_payment)

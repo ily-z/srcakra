@@ -136,6 +136,20 @@
             </div>
 
             <div>
+                <label for="no_wa" class="mb-1 block text-sm font-medium text-slate-800">No. WhatsApp</label>
+                <input
+                    type="tel"
+                    name="no_wa"
+                    id="no_wa"
+                    class="w-full rounded-lg border border-slate-300 p-2.5 focus:border-[#5C4033] focus:outline-none focus:ring-2 focus:ring-[#5C4033]/20"
+                    value="{{ old('no_wa') }}"
+                    placeholder="08xxxxxxxxxx"
+                    autocomplete="tel"
+                />
+                <p class="mt-1 text-xs text-slate-500">Digunakan untuk menerima notifikasi via WhatsApp.</p>
+            </div>
+
+            <div>
                 <label for="tujuan_kunjungan" class="mb-1 block text-sm font-medium text-slate-800">Tujuan kunjungan</label>
                 <textarea
                     name="tujuan_kunjungan"

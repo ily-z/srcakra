@@ -195,3 +195,9 @@ app password: avay sjck folr qywh
 email password: qiyasz52
 SMTP secure: ssl
 SSL: 465
+
+### wa sender
+
+api provider: fonnte.com
+API token: tEaCWVAdP2BGSfQWfkqy
+wa number: 6283168949600

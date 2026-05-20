@@ -65,7 +65,7 @@
                             </p>
                             <p style="font-size:13px;color:#888;line-height:1.6;margin:4px 0 0">
                                 Email: joyboyboy11@gmail.com<br>
-                                WhatsApp: 0812-3456-7890
+                                WhatsApp: 6283168949600
                             </p>
 
                             <p style="font-size:13px;color:#888;line-height:1.6;margin-top:20px">

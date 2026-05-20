@@ -20,6 +20,7 @@ class Pendaftar extends Model
         'nama_instansi',
         'alamat',
         'email',
+        'no_wa',
         'tujuan_kunjungan',
         'surat_pengajuan',
         'jumlah_pengunjung',
