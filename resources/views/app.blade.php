@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ config('app.name', 'Museum Cakraningrat') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.tsx'])
+    @if (config('app.env') !== 'production')
+        <script>
+            window.$RefreshReg$ = () => {};
+            window.$RefreshSig$ = () => (type) => type;
+        </script>
+    @endif
 </head>
 <body class="min-h-screen bg-[#F5F5DC] text-slate-800 antialiased">
     @inertia

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PengajuanDiterima;
 use App\Models\Kunjungan;
 use App\Models\Payment;
 use App\Models\Pendaftar;
+use App\Services\FonnteService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -54,6 +56,24 @@ class AdminController extends Controller
             'status_pengajuan' => 'approved',
             'catatan_admin' => $request->input('catatan_admin'),
         ]);
+
+        $payment = $pendaftar->payment;
+
+        if ($payment) {
+            try {
+                Mail::to($pendaftar->email)->send(new PengajuanDiterima($payment));
+            } catch (\Throwable) {
+                // Keep non-blocking when mail server is unavailable.
+            }
+
+            if ($pendaftar->no_wa) {
+                try {
+                    FonnteService::sendPengajuan($payment);
+                } catch (\Throwable) {
+                    // Keep non-blocking when WhatsApp server is unavailable.
+                }
+            }
+        }
 
         return back()->with('success', 'Pengajuan disetujui.');
     }

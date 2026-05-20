@@ -18,7 +18,7 @@ export default defineConfig({
             babel: {
                 plugins: ['babel-plugin-react-compiler'],
             },
-            exclude: [/\.stories\.(t|j)sx?$/, /\.test\.(t|j)sx?$/],
+            exclude: [/\/node_modules\//, /\.stories\.(t|j)sx?$/, /\.test\.(t|j)sx?$/],
         }),
         tailwindcss(),
         wayfinder({

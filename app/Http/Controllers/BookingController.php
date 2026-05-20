@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use Carbon\CarbonInterface;
-use App\Mail\PengajuanDiterima;
 use App\Models\DisableDay;
 use App\Models\Kunjungan;
 use App\Models\Payment;
 use App\Models\Pendaftar;
-use App\Services\FonnteService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -179,20 +177,6 @@ class BookingController extends Controller
         });
 
         [$pendaftar, $payment] = $result;
-
-        try {
-            Mail::to($pendaftar->email)->send(new PengajuanDiterima($payment));
-        } catch (\Throwable) {
-            // Keep booking flow non-blocking when mail server is unavailable.
-        }
-
-        if ($pendaftar->no_wa) {
-            try {
-                FonnteService::sendPengajuan($payment);
-            } catch (\Throwable) {
-                // Keep booking flow non-blocking when WhatsApp server is unavailable.
-            }
-        }
 
         return redirect()->route('booking.payment', $payment->id_payment)
             ->with('success', 'Pengajuan berhasil dikirim.');
