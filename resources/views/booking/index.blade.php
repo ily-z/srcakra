@@ -55,6 +55,7 @@
                     name="tanggal_kunjungan"
                     class="w-full rounded-lg border border-slate-300 p-2.5 focus:border-[#5C4033] focus:outline-none focus:ring-2 focus:ring-[#5C4033]/20"
                     value="{{ old('tanggal_kunjungan') }}"
+                    min="{{ \Carbon\Carbon::tomorrow()->toDateString() }}"
                     required
                 />
                 <p class="mt-1 text-xs text-slate-500">Gunakan kalender di kiri untuk memilih tanggal (jika layar lebar), atau pilih manual di sini.</p>
@@ -255,17 +256,6 @@
         }
     });
 
-    document.querySelectorAll('[data-calendar-date]').forEach((btn) => {
-        btn.addEventListener('click', () => {
-            const v = btn.getAttribute('data-calendar-date');
-            if (disabledDates.includes(v)) {
-                alert('Tanggal ini tidak tersedia.');
-                return;
-            }
-            tanggalInput.value = v;
-            tanggalInput.dispatchEvent(new Event('change'));
-            tanggalInput.focus();
-        });
-    });
+    // Calendar date click no longer fills the form field
 </script>
 @endsection

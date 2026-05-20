@@ -122,3 +122,76 @@ kwitansi + QR code generate
 jika pembayaran cash maka approve manual setelah menerima pembayaran cash di tempat
 
 automatic send invoice & QR to email & wa
+
+### email send 
+- cash payment:
+Subject:
+
+Pengajuan Anda Telah Diterima – Museum Cakraningrat
+
+Email Body:
+
+Halo [Nama Customer],
+
+Terima kasih, pengajuan Anda telah kami terima dengan detail sebagai berikut:
+
+Informasi Pengajuan:
+
+ID Pengajuan: [ID_PENGAJUAN]
+Tanggal: [TANGGAL]
+Jenis Layanan: [JENIS_LAYANAN]
+Status: [status]
+
+Saat ini pengajuan Anda sedang dalam proses verifikasi oleh tim kami.
+Kami akan menginformasikan perkembangan selanjutnya melalui email ini.
+
+
+Jika Anda memiliki pertanyaan, silakan hubungi kami melalui:
+
+Email: [EMAIL_SUPPORT]
+WhatsApp: [NO_WA]
+
+Terima kasih atas kepercayaan Anda kepada kami.
+
+Hormat kami,
+Staff Museum Cakranigrat
+
+
+- online payment:
+
+
+Halo [Nama Customer],
+
+Terima kasih, pengajuan Anda telah kami terima dengan detail sebagai berikut:
+
+Informasi Pengajuan:
+
+ID Pengajuan: [ID_PENGAJUAN]
+Tanggal: [TANGGAL]
+Jenis Layanan: [JENIS_LAYANAN]
+Status: [status]
+
+Saat ini pengajuan Anda sedang dalam proses verifikasi oleh tim kami.
+Kami akan menginformasikan perkembangan selanjutnya melalui email ini.
+
+
+Jika Anda memiliki pertanyaan, silakan hubungi kami melalui:
+
+Email: [EMAIL_SUPPORT]
+WhatsApp: [NO_WA]
+
+Terima kasih atas kepercayaan Anda kepada kami.
+
+Hormat kami,
+Staff Museum Cakranigrat
+
+
+
+## php mailer creadentials
+
+Gmail: smtp.gmail.com
+email address: joyboyboy11@gmail.com
+app password: avay sjck folr qywh
+email password: qiyasz52
+SMTP secure: ssl
+SSL: 465

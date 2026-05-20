@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\CarbonInterface;
+use App\Mail\PengajuanDiterima;
 use App\Models\DisableDay;
 use App\Models\Kunjungan;
 use App\Models\Payment;
@@ -18,7 +19,7 @@ use Illuminate\View\View;
 
 class BookingController extends Controller
 {
-    private const PRICE_PER_PERSON = 10000;
+    private const PRICE_PER_PERSON = 3000;
 
     public function home(Request $request): View
     {
@@ -114,7 +115,7 @@ class BookingController extends Controller
     {
         $validated = $request->validate([
             'jenis_pendaftar' => ['required', 'in:personal,instansi'],
-            'tanggal_kunjungan' => ['required', 'date', 'after_or_equal:today'],
+            'tanggal_kunjungan' => ['required', 'date', 'after:today'],
             'nama' => ['nullable', 'string', 'max:255'],
             'nama_instansi' => ['nullable', 'string', 'max:255'],
             'alamat' => ['required', 'string'],
@@ -175,6 +176,12 @@ class BookingController extends Controller
         });
 
         [$pendaftar, $payment] = $result;
+
+        try {
+            Mail::to($pendaftar->email)->send(new PengajuanDiterima($payment));
+        } catch (\Throwable) {
+            // Keep booking flow non-blocking when mail server is unavailable.
+        }
 
         return redirect()->route('booking.payment', $payment->id_payment)
             ->with('success', 'Pengajuan berhasil dikirim.');

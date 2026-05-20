@@ -97,7 +97,7 @@ export default function CreateKunjungan({ disabledDays }) {
                                 value={data.tanggal_kunjungan}
                                 onChange={e => setData('tanggal_kunjungan', e.target.value)}
                                 error={errors.tanggal_kunjungan}
-                                min={new Date().toISOString().split('T')[0]}
+                                min={new Date(Date.now() + 86400000).toISOString().split('T')[0]}
                             />
 
                             {/* Email */}
