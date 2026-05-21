@@ -109,7 +109,7 @@ class AdminController extends Controller
                 }
 
                 if (! $payment->kunjungan) {
-                    Kunjungan::create([
+                    $kunjungan = Kunjungan::create([
                         'tanggal_daftar' => $payment->pendaftar->tanggal_daftar,
                         'tanggal_kunjungan' => $payment->pendaftar->tanggal_kunjungan,
                         'nama' => $payment->pendaftar->nama,
@@ -123,11 +123,32 @@ class AdminController extends Controller
                         'status_kunjungan' => 'waiting',
                         'qr_token' => (string) Str::uuid(),
                     ]);
+
+                    $this->sendInvoiceEmail($kunjungan);
                 }
             }
         });
 
         return back()->with('success', 'Status pembayaran diubah menjadi paid.');
+    }
+
+    private function sendInvoiceEmail(Kunjungan $kunjungan): void
+    {
+        try {
+            $name = $kunjungan->nama ?: $kunjungan->nama_instansi ?: 'Pengunjung';
+            $receiptUrl = route('booking.receipt', $kunjungan->id_payment);
+            Mail::raw("Halo {$name}, invoice dan QR kunjungan Anda: {$receiptUrl}", function ($message) use ($kunjungan) {
+                $message->to($kunjungan->email)->subject('Invoice & QR Kunjungan Museum');
+            });
+        } catch (\Throwable) {
+            // Keep non-blocking when mail server is unavailable.
+        }
+
+        try {
+            FonnteService::sendInvoice($kunjungan);
+        } catch (\Throwable) {
+            // Keep non-blocking when WhatsApp server is unavailable.
+        }
     }
 
     public function requestPayment(Payment $payment): RedirectResponse

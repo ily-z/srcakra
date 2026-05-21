@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Kunjungan;
 use App\Models\Payment;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
@@ -35,6 +36,27 @@ class FonnteService
         $message .= "WhatsApp: {$waNumber}\n\n";
         $message .= "Terima kasih atas kepercayaan Anda kepada kami.\n\n";
         $message .= "Hormat kami,\nStaff Museum Cakraningrat";
+
+        Http::withHeaders([
+            'Authorization' => config('services.fonnte.token'),
+        ])->post('https://api.fonnte.com/send', [
+            'target' => $pendaftar->no_wa,
+            'message' => $message,
+        ]);
+    }
+
+    public static function sendInvoice(Kunjungan $kunjungan): void
+    {
+        $pendaftar = $kunjungan->payment->pendaftar;
+        $name = $kunjungan->nama ?: $kunjungan->nama_instansi ?: 'Pengunjung';
+        $receiptUrl = route('booking.receipt', $kunjungan->id_payment);
+
+        $message = "Halo {$name},\n\n";
+        $message .= "Pembayaran Anda telah dikonfirmasi. Berikut adalah invoice dan QR code untuk kunjungan Anda:\n\n";
+        $message .= "{$receiptUrl}\n\n";
+        $message .= "Tunjukkan QR code pada saat check-in di museum.\n\n";
+        $message .= "Terima kasih.\n";
+        $message .= "Staff Museum Cakraningrat";
 
         Http::withHeaders([
             'Authorization' => config('services.fonnte.token'),

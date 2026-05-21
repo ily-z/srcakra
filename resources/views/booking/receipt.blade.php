@@ -1,6 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    @media print {
+        .no-print { display: none !important; }
+        body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+</style>
 <div class="mx-auto max-w-2xl">
     <div class="mb-6 text-center">
         <p class="text-xs font-semibold uppercase tracking-widest text-[#5C4033]/80">Museum Cakraningrat</p>
@@ -55,28 +61,19 @@
         </div>
     </div>
 
-    <div class="mt-8 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-        <p class="mb-3 text-center text-sm font-semibold text-slate-800">Kirim kwitansi &amp; QR</p>
-        <div class="flex flex-col gap-3 sm:flex-row sm:justify-center">
-            <a
-                class="inline-flex flex-1 items-center justify-center rounded-xl bg-emerald-600 px-4 py-3 text-center text-sm font-bold text-white shadow-sm transition hover:bg-emerald-700"
-                href="mailto:{{ $kunjungan->email }}?subject={{ rawurlencode('Kwitansi kunjungan Museum Cakraningrat') }}&body={{ rawurlencode('Link kwitansi & QR: ' . route('booking.receipt', $payment->id_payment)) }}"
+    <div class="no-print mt-8 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+        <p class="mb-3 text-center text-sm font-semibold text-slate-800">Cetak Invoice</p>
+        <div class="flex justify-center">
+            <button
+                onclick="window.print()"
+                class="inline-flex items-center justify-center rounded-xl bg-[#5C4033] px-6 py-3 text-center text-sm font-bold text-white shadow-sm transition hover:bg-[#4a3329]"
             >
-                Kirim ke email
-            </a>
-            <a
-                class="inline-flex flex-1 items-center justify-center rounded-xl bg-[#25D366] px-4 py-3 text-center text-sm font-bold text-white shadow-sm transition hover:bg-[#20bd5a]"
-                href="https://wa.me/?text={{ rawurlencode('Kwitansi & QR kunjungan Museum: ' . route('booking.receipt', $payment->id_payment)) }}"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                Kirim ke WhatsApp
-            </a>
+                cetak Kirim kwitansi &amp; QR
+            </button>
         </div>
-        <p class="mt-3 text-center text-xs text-slate-500">WhatsApp membuka aplikasi dengan pesan berisi link halaman ini.</p>
     </div>
 
-    <p class="mt-8 text-center text-xs text-slate-500">
+    <p class="no-print mt-8 text-center text-xs text-slate-500">
         <a href="{{ route('home') }}" class="font-medium text-[#5C4033] underline">Beranda</a>
         ·
         <a href="{{ route('booking.index') }}" class="font-medium text-[#5C4033] underline">Form baru</a>

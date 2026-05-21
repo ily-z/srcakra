@@ -8,7 +8,7 @@
 </head>
 <body class="min-h-screen bg-[#F5F5DC] text-slate-800">
 
-    <header class="border-b border-[#5C4033]/20 bg-[#5C4033] text-white shadow">
+    <header class="no-print border-b border-[#5C4033]/20 bg-[#5C4033] text-white shadow">
         <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-4">
             <a href="{{ route('home') }}" class="text-lg font-bold tracking-tight">Museum Cakraningrat</a>
             <nav class="flex flex-wrap items-center gap-4 text-sm font-medium">
@@ -25,7 +25,7 @@
         @yield('content')
     </main>
 
-    <footer class="mt-auto border-t border-[#5C4033]/30 bg-[#5C4033] px-4 py-6 text-white">
+    <footer class="no-print mt-auto border-t border-[#5C4033]/30 bg-[#5C4033] px-4 py-6 text-white">
         <div class="mx-auto flex max-w-5xl flex-col gap-2 text-sm md:flex-row md:items-center md:justify-between">
             <p>&copy; {{ date('Y') }} Museum Cakraningrat</p>
             <p class="text-white/80">
