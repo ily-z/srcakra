@@ -26,6 +26,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('/history', [AdminController::class, 'history'])->name('history');
     Route::get('/history/{kunjungan}', [AdminController::class, 'historyDetail'])->name('history.detail');
     Route::get('/scanner', [AdminController::class, 'scanner'])->name('scanner');
+    Route::get('/scan/check/{token}', [AdminController::class, 'scanCheck'])->name('scan.check');
     Route::post('/scan/{token}', [AdminController::class, 'scanToken'])->name('scan');
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');

@@ -200,14 +200,58 @@ class AdminController extends Controller
         return view('admin.scanner');
     }
 
-    public function scanToken(string $token): RedirectResponse
+    public function scanToken(Request $request, string $token): RedirectResponse|\Illuminate\Http\JsonResponse
     {
         $kunjungan = Kunjungan::query()->where('qr_token', $token)->first();
+
         if (! $kunjungan) {
+            if ($request->wantsJson()) {
+                return response()->json(['success' => false, 'message' => 'QR token tidak valid.']);
+            }
             return back()->with('error', 'QR tidak valid.');
         }
 
+        if ($kunjungan->status_kunjungan === 'completed') {
+            if ($request->wantsJson()) {
+                return response()->json(['success' => false, 'message' => 'Kunjungan ini sudah selesai sebelumnya.']);
+            }
+            return back()->with('error', 'Kunjungan ini sudah selesai sebelumnya.');
+        }
+
         $kunjungan->update(['status_kunjungan' => 'completed']);
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Kunjungan ditandai selesai.',
+                'data' => ['nama' => $kunjungan->nama ?: $kunjungan->nama_instansi],
+            ]);
+        }
+
         return back()->with('success', 'QR valid. Kunjungan ditandai selesai.');
+    }
+
+    public function scanCheck(string $token): \Illuminate\Http\JsonResponse
+    {
+        $kunjungan = Kunjungan::query()->where('qr_token', $token)->first();
+
+        if (! $kunjungan) {
+            return response()->json(['found' => false, 'message' => 'Token tidak ditemukan.']);
+        }
+
+        return response()->json([
+            'found' => true,
+            'data' => [
+                'id_pengunjung' => $kunjungan->id_pengunjung,
+                'nama' => $kunjungan->nama,
+                'nama_instansi' => $kunjungan->nama_instansi,
+                'email' => $kunjungan->email,
+                'tanggal_kunjungan' => $kunjungan->tanggal_kunjungan,
+                'tujuan_kunjungan' => $kunjungan->tujuan_kunjungan,
+                'jumlah_pengunjung' => $kunjungan->jumlah_pengunjung,
+                'payment_method' => $kunjungan->payment_method,
+                'status_kunjungan' => $kunjungan->status_kunjungan,
+            ],
+        ]);
     }
 }

@@ -201,3 +201,6 @@ SSL: 465
 api provider: fonnte.com
 API token: tEaCWVAdP2BGSfQWfkqy
 wa number: 6283168949600
+
+### xendit
+API: xnd_development_ICfz0eUVGGS0BYcnWEbZ9lhrIdJy9wxMzloNOizULrrlJJrTHUjKDE5hfRvd
