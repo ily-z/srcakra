@@ -7,6 +7,8 @@ use App\Models\DisableDay;
 use App\Models\Kunjungan;
 use App\Models\Payment;
 use App\Models\Pendaftar;
+use App\Services\FonnteService;
+use App\Services\MidtransService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -123,7 +125,7 @@ class BookingController extends Controller
             'tujuan_kunjungan' => ['required', 'string'],
             'surat_pengajuan' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
             'jumlah_pengunjung' => ['nullable', 'integer', 'min:1'],
-            'payment_method' => ['required', 'in:cash,dana,gopay,shopeepay'],
+            'payment_method' => ['required', 'in:cash,midtrans'],
         ]);
 
         $isDisabled = DisableDay::query()->whereDate('tanggal', $validated['tanggal_kunjungan'])->exists();
@@ -186,6 +188,104 @@ class BookingController extends Controller
     {
         $payment->load('pendaftar', 'kunjungan');
         return view('booking.payment', ['payment' => $payment]);
+    }
+
+    public function payViaMidtrans(Payment $payment): RedirectResponse
+    {
+        if ($payment->status === 'paid') {
+            return redirect()->route('booking.receipt', $payment->id_payment);
+        }
+
+        if (! $payment->midtrans_redirect_url) {
+            $this->createMidtransSnapAndNotify($payment);
+        }
+
+        $payment->refresh();
+
+        if ($payment->midtrans_redirect_url) {
+            return redirect()->away($payment->midtrans_redirect_url);
+        }
+
+        return redirect()->route('booking.payment', $payment->id_payment)
+            ->with('error', 'Gagal membuat halaman pembayaran. Silakan coba lagi.');
+    }
+
+    private function createMidtransSnapAndNotify(Payment $payment): void
+    {
+        if ($payment->midtrans_redirect_url) {
+            return;
+        }
+
+        $pendaftar = $payment->pendaftar;
+        $name = $pendaftar?->nama ?: $pendaftar?->nama_instansi ?: 'Pengunjung';
+
+        try {
+            $midtrans = app(MidtransService::class);
+            $result = $midtrans->createSnapUrl(
+                orderId: "BOOKING-{$payment->id_payment}-" . Str::random(6),
+                amount: (float) $payment->total,
+                customerName: $name,
+                customerEmail: $pendaftar?->email ?? '',
+                customerPhone: $pendaftar?->no_wa,
+            );
+
+            $payment->update([
+                'midtrans_transaction_id' => $result['token'],
+                'midtrans_redirect_url' => $result['redirect_url'],
+                'midtrans_order_id' => "BOOKING-{$payment->id_payment}-" . Str::random(6),
+            ]);
+
+            $this->sendMidtransPaymentNotification($payment);
+        } catch (\Throwable $e) {
+            report($e);
+        }
+    }
+
+    private function sendMidtransPaymentNotification(Payment $payment): void
+    {
+        $pendaftar = $payment->pendaftar;
+        $name = $pendaftar?->nama ?: $pendaftar?->nama_instansi ?: 'Pengunjung';
+        $paymentUrl = $payment->midtrans_redirect_url ?? route('booking.payment', $payment->id_payment);
+        $paymentId = $payment->id_payment;
+        $total = number_format($payment->total, 0, ',', '.');
+
+        try {
+            Mail::raw(
+                "Halo {$name},\n\n" .
+                "Pengajuan kunjungan Anda ke Museum Cakraningrat telah diterima.\n\n" .
+                "Detail Pembayaran:\n" .
+                "Nomor Pembayaran: #{$paymentId}\n" .
+                "Total: Rp {$total}\n" .
+                "Metode: Midtrans Online Payment\n\n" .
+                "Silakan lakukan pembayaran melalui link berikut:\n{$paymentUrl}\n\n" .
+                "Setelah pembayaran berhasil dikonfirmasi, Anda akan menerima invoice dan QR code untuk check-in.\n\n" .
+                "Terima kasih.\nStaff Museum Cakraningrat",
+                function ($message) use ($pendaftar, $name) {
+                    $message->to($pendaftar->email)
+                        ->subject('Link Pembayaran Kunjungan Museum Cakraningrat');
+                }
+            );
+        } catch (\Throwable) {
+            // Keep non-blocking when mail server is unavailable.
+        }
+
+        if ($pendaftar?->no_wa) {
+            try {
+                $message = "Halo {$name},\n\n" .
+                    "Pengajuan kunjungan Anda ke Museum Cakraningrat telah diterima.\n\n" .
+                    "Detail Pembayaran:\n" .
+                    "Nomor: #{$paymentId}\n" .
+                    "Total: Rp {$total}\n" .
+                    "Metode: Midtrans Online Payment\n\n" .
+                    "Link Pembayaran:\n{$paymentUrl}\n\n" .
+                    "Setelah pembayaran berhasil, Anda akan menerima invoice & QR code.\n\n" .
+                    "Terima kasih.\nStaff Museum Cakraningrat";
+
+                FonnteService::sendMessage($pendaftar->no_wa, $message);
+            } catch (\Throwable) {
+                // Keep non-blocking when WhatsApp server is unavailable.
+            }
+        }
     }
 
     public function midtransCallbackSimulation(Payment $payment): RedirectResponse

@@ -40,4 +40,11 @@ return [
         'number' => env('FONNTE_NUMBER'),
     ],
 
+    'midtrans' => [
+        'server_key' => env('MIDTRANS_SERVER_KEY'),
+        'client_key' => env('MIDTRANS_CLIENT_KEY'),
+        'merchant_id' => env('MIDTRANS_MERCHANT_ID'),
+        'mode' => env('MIDTRANS_MODE', 'sandbox'),
+    ],
+
 ];

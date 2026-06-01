@@ -162,27 +162,19 @@
 
             <div class="rounded-xl border border-slate-200 bg-slate-50/90 p-4">
                 <span class="mb-3 block text-sm font-medium text-slate-800">Metode pembayaran</span>
-                <p class="mb-3 text-xs text-slate-600">Pilih <span class="font-medium">Cash</span> (di tempat) atau <span class="font-medium">Online</span> (DANA, GoPay, ShopeePay via Midtrans).</p>
+                <p class="mb-3 text-xs text-slate-600">Pilih <span class="font-medium">Cash</span> (bayar di tempat) atau <span class="font-medium">Online (Midtrans)</span> (e-wallet, bank transfer, QRIS, retail outlet).</p>
 
                 <div class="mb-3 grid grid-cols-2 gap-2 rounded-xl bg-white p-1 ring-1 ring-slate-200" role="group">
                     <button type="button" id="payCashBtn" class="rounded-lg px-3 py-2 text-sm font-semibold transition">
                         Cash
                     </button>
-                    <button type="button" id="payOnlineBtn" class="rounded-lg px-3 py-2 text-sm font-semibold transition">
-                        Online
+                    <button type="button" id="payMidtransBtn" class="rounded-lg px-3 py-2 text-sm font-semibold transition">
+                        Online (Midtrans)
                     </button>
                 </div>
 
-                <div id="ewalletField" class="hidden">
-                    <label for="ewalletSelect" class="mb-1 block text-xs font-medium text-slate-700">Channel pembayaran online</label>
-                    <select
-                        id="ewalletSelect"
-                        class="w-full rounded-lg border border-slate-300 bg-white p-2.5 text-sm focus:border-[#5C4033] focus:outline-none focus:ring-2 focus:ring-[#5C4033]/20"
-                    >
-                        <option value="dana">DANA</option>
-                        <option value="gopay">GoPay</option>
-                        <option value="shopeepay">ShopeePay</option>
-                    </select>
+                <div id="midtransDesc" class="hidden rounded-lg bg-sky-50 p-3 text-xs text-sky-950">
+                    Pembayaran via Midtrans: Tersedia e-wallet (DANA, OVO, GoPay, ShopeePay, LinkAja), QRIS, bank transfer, dan retail outlet.
                 </div>
 
                 <input type="hidden" name="payment_method" id="payment_method" value="{{ old('payment_method', 'cash') }}" />
@@ -207,9 +199,8 @@
     const instansiFields = document.getElementById('instansiFields');
     const tanggalInput = document.getElementById('tanggal_kunjungan');
     const payCashBtn = document.getElementById('payCashBtn');
-    const payOnlineBtn = document.getElementById('payOnlineBtn');
-    const ewalletField = document.getElementById('ewalletField');
-    const ewalletSelect = document.getElementById('ewalletSelect');
+    const payMidtransBtn = document.getElementById('payMidtransBtn');
+    const midtransDesc = document.getElementById('midtransDesc');
     const paymentMethodInput = document.getElementById('payment_method');
 
     const activeTabClass = 'bg-[#5C4033] text-white shadow-sm';
@@ -229,39 +220,27 @@
 
     const payActive = 'bg-[#5C4033] text-white shadow-sm';
     const payIdle = 'text-slate-700 hover:bg-slate-100';
-    let paymentMode = 'cash';
 
     function setPaymentUI(mode) {
-        paymentMode = mode;
-        const isOnline = mode === 'online';
-        payCashBtn.className = 'rounded-lg px-3 py-2 text-sm font-semibold transition ' + (isOnline ? payIdle : payActive);
-        payOnlineBtn.className = 'rounded-lg px-3 py-2 text-sm font-semibold transition ' + (isOnline ? payActive : payIdle);
-        ewalletField.classList.toggle('hidden', !isOnline);
-        if (isOnline) {
-            paymentMethodInput.value = ewalletSelect.value;
-        } else {
+        payCashBtn.className = 'rounded-lg px-3 py-2 text-sm font-semibold transition ' + payIdle;
+        payMidtransBtn.className = 'rounded-lg px-3 py-2 text-sm font-semibold transition ' + payIdle;
+        midtransDesc.classList.add('hidden');
+
+        if (mode === 'cash') {
+            payCashBtn.className = 'rounded-lg px-3 py-2 text-sm font-semibold transition ' + payActive;
             paymentMethodInput.value = 'cash';
+        } else {
+            payMidtransBtn.className = 'rounded-lg px-3 py-2 text-sm font-semibold transition ' + payActive;
+            midtransDesc.classList.remove('hidden');
+            paymentMethodInput.value = 'midtrans';
         }
     }
 
     payCashBtn.addEventListener('click', () => setPaymentUI('cash'));
-    payOnlineBtn.addEventListener('click', () => setPaymentUI('online'));
-    ewalletSelect.addEventListener('change', () => {
-        if (paymentMode === 'online') {
-            paymentMethodInput.value = ewalletSelect.value;
-        }
-    });
+    payMidtransBtn.addEventListener('click', () => setPaymentUI('midtrans'));
 
     const oldPm = @json(old('payment_method', 'cash'));
-    if (oldPm === 'cash') {
-        setPaymentUI('cash');
-    } else {
-        setPaymentUI('online');
-        if (['dana', 'gopay', 'shopeepay'].includes(oldPm)) {
-            ewalletSelect.value = oldPm;
-            paymentMethodInput.value = oldPm;
-        }
-    }
+    setPaymentUI(oldPm === 'midtrans' ? 'midtrans' : 'cash');
 
     tanggalInput.addEventListener('change', function () {
         if (disabledDates.includes(this.value)) {

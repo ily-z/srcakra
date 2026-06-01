@@ -20,6 +20,11 @@
                 <a class="block rounded-md px-3 py-2 hover:bg-white/10" href="{{ route('admin.history') }}">History Kunjungan</a>
                 <a class="block rounded-md px-3 py-2 hover:bg-white/10" href="{{ route('admin.scanner') }}">QR Scanner</a>
                 <a class="block rounded-md px-3 py-2 hover:bg-white/10" href="{{ route('admin.users.index') }}">User Management</a>
+                <hr class="my-3 border-white/20">
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="block w-full rounded-md px-3 py-2 text-left hover:bg-white/10">Logout</button>
+                </form>
             </nav>
         </aside>
         <main class="flex-1 p-8">

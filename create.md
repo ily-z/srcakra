@@ -204,3 +204,49 @@ wa number: 6283168949600
 
 ### xendit
 API: xnd_development_ICfz0eUVGGS0BYcnWEbZ9lhrIdJy9wxMzloNOizULrrlJJrTHUjKDE5hfRvd
+PUBLIC_KEY: xnd_public_development_h3SzWYr_QkyFCt10q11g9tNPw0GwGNezKsOXwSDCy6LxJRJM0MozYV2yBt1VuT_S
+Webhook verification token: 7hjOkr0ajRaWCCl9eIh15hYHJ5P9RvBTUcF2peuQtORR5O2v
+
+### online payment send after approve
+
+### email and wa send online payment 
+Subject:
+
+Pengajuan Anda Telah Diterima – Museum Cakraningrat
+
+Email Body:
+
+Halo [Nama Customer],
+
+Terima kasih, pengajuan Anda telah kami terima dengan detail sebagai berikut:
+
+Informasi Pengajuan:
+
+ID Pengajuan: [ID_PENGAJUAN]
+Tanggal: [TANGGAL]
+Jenis Layanan: [JENIS_LAYANAN]
+Status: [status]
+
+silahkan lakukan pembayaran secara online pada tautan berikut
+
+ [XENDIT_PAYMENT_URL]
+
+
+Jika Anda memiliki pertanyaan, silakan hubungi kami melalui:
+
+Email: [EMAIL_SUPPORT]
+WhatsApp: [NO_WA]
+
+Terima kasih atas kepercayaan Anda kepada kami.
+
+Hormat kami,
+Staff Museum Cakranigrat
+
+
+### midtrans payments credentials
+
+Credentials stored in .env file (not committed)
+
+
+
+

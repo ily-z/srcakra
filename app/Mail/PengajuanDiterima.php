@@ -15,6 +15,7 @@ class PengajuanDiterima extends Mailable
 
     public function __construct(
         public Payment $payment,
+        public ?string $paymentUrl = null,
     ) {}
 
     public function envelope(): Envelope

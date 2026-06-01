@@ -7,13 +7,9 @@ use App\Models\Kunjungan;
 use App\Models\Payment;
 use App\Models\Pendaftar;
 use App\Services\FonnteService;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
+use App\Services\MidtransService;
 use Illuminate\View\View;
+use Illuminate\Support\Carbon;
 
 class AdminController extends Controller
 {
@@ -60,15 +56,44 @@ class AdminController extends Controller
         $payment = $pendaftar->payment;
 
         if ($payment) {
+            $paymentUrl = null;
+
+            $name = $pendaftar->nama ?: $pendaftar->nama_instansi ?: 'Pengunjung';
+
+            if ($payment->payment_method === 'midtrans' && ! $payment->midtrans_redirect_url) {
+                try {
+                    $midtrans = app(MidtransService::class);
+                    $result = $midtrans->createSnapUrl(
+                        orderId: "BOOKING-{$payment->id_payment}-" . Str::random(6),
+                        amount: (float) $payment->total,
+                        customerName: $name,
+                        customerEmail: $pendaftar->email ?? '',
+                        customerPhone: $pendaftar->no_wa,
+                    );
+
+                    $payment->update([
+                        'midtrans_transaction_id' => $result['token'],
+                        'midtrans_redirect_url' => $result['redirect_url'],
+                        'midtrans_order_id' => "BOOKING-{$payment->id_payment}-" . Str::random(6),
+                    ]);
+
+                    $paymentUrl = $result['redirect_url'];
+                } catch (\Throwable $e) {
+                    report($e);
+                }
+            } elseif ($payment->midtrans_redirect_url) {
+                $paymentUrl = $payment->midtrans_redirect_url;
+            }
+
             try {
-                Mail::to($pendaftar->email)->send(new PengajuanDiterima($payment));
+                Mail::to($pendaftar->email)->send(new PengajuanDiterima($payment, $paymentUrl));
             } catch (\Throwable) {
                 // Keep non-blocking when mail server is unavailable.
             }
 
             if ($pendaftar->no_wa) {
                 try {
-                    FonnteService::sendPengajuan($payment);
+                    FonnteService::sendPengajuan($payment, $paymentUrl);
                 } catch (\Throwable) {
                     // Keep non-blocking when WhatsApp server is unavailable.
                 }

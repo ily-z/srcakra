@@ -51,7 +51,19 @@
                                 Kami akan menginformasikan perkembangan selanjutnya melalui email ini.
                             </p>
 
-                            @if ($payment->payment_method !== 'cash')
+                            @if ($paymentUrl)
+                                <p style="font-size:14px;color:#555;line-height:1.6">
+                                    Silakan lakukan pembayaran secara online pada tautan berikut:
+                                </p>
+                                <p style="margin:16px 0;text-align:center">
+                                    <a href="{{ $paymentUrl }}" style="display:inline-block;background-color:#5C4033;color:#ffffff;padding:12px 28px;border-radius:6px;font-size:14px;font-weight:bold;text-decoration:none">
+                                        Bayar Sekarang
+                                    </a>
+                                </p>
+                                <p style="font-size:12px;color:#888;line-height:1.6">
+                                    Atau salin tautan berikut ke browser: {{ $paymentUrl }}
+                                </p>
+                            @elseif ($payment->payment_method !== 'cash')
                                 <p style="font-size:14px;color:#555;line-height:1.6">
                                     Untuk metode pembayaran online, Anda akan menerima email lanjutan
                                     dengan instruksi pembayaran setelah pengajuan Anda disetujui oleh admin.
