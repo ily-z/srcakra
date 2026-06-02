@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\DisableDayController;
 use App\Http\Controllers\MidtransController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +40,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+    Route::get('/disable-days', [DisableDayController::class, 'index'])->name('disable-days.index');
+    Route::get('/disable-days/create', [DisableDayController::class, 'create'])->name('disable-days.create');
+    Route::post('/disable-days', [DisableDayController::class, 'store'])->name('disable-days.store');
+    Route::get('/disable-days/{disableDay}/edit', [DisableDayController::class, 'edit'])->name('disable-days.edit');
+    Route::put('/disable-days/{disableDay}', [DisableDayController::class, 'update'])->name('disable-days.update');
+    Route::delete('/disable-days/{disableDay}', [DisableDayController::class, 'destroy'])->name('disable-days.destroy');
 });
 
 require __DIR__.'/settings.php';
