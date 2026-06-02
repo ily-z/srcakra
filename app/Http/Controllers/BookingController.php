@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -184,8 +185,27 @@ class BookingController extends Controller
             ->with('success', 'Pengajuan berhasil dikirim.');
     }
 
-    public function payment(Payment $payment): View
+    public function payment(Payment $payment, Request $request): View|RedirectResponse
     {
+        $transactionStatus = $request->query('transaction_status');
+        $orderId = $request->query('order_id');
+
+        if ($transactionStatus && $orderId && in_array($transactionStatus, ['capture', 'settlement'])) {
+            if ($payment->midtrans_order_id === $orderId && $payment->status !== 'paid') {
+                DB::transaction(function () use ($payment) {
+                    $payment->update(['status' => 'paid']);
+                    $pendaftar = $payment->pendaftar;
+                    if ($pendaftar && $pendaftar->status_pengajuan !== 'approved') {
+                        $pendaftar->update(['status_pengajuan' => 'approved']);
+                    }
+                    if (! $payment->kunjungan) {
+                        $this->createKunjunganFromPayment($payment, $pendaftar);
+                    }
+                });
+                return redirect()->route('booking.receipt', $payment->id_payment);
+            }
+        }
+
         $payment->load('pendaftar', 'kunjungan');
         return view('booking.payment', ['payment' => $payment]);
     }
@@ -220,19 +240,21 @@ class BookingController extends Controller
         $name = $pendaftar?->nama ?: $pendaftar?->nama_instansi ?: 'Pengunjung';
 
         try {
+            $orderId = "BOOKING-{$payment->id_payment}-" . Str::random(6);
             $midtrans = app(MidtransService::class);
             $result = $midtrans->createSnapUrl(
-                orderId: "BOOKING-{$payment->id_payment}-" . Str::random(6),
+                orderId: $orderId,
                 amount: (float) $payment->total,
                 customerName: $name,
                 customerEmail: $pendaftar?->email ?? '',
                 customerPhone: $pendaftar?->no_wa,
+                finishRedirectUrl: route('booking.payment', $payment->id_payment),
             );
 
             $payment->update([
                 'midtrans_transaction_id' => $result['token'],
                 'midtrans_redirect_url' => $result['redirect_url'],
-                'midtrans_order_id' => "BOOKING-{$payment->id_payment}-" . Str::random(6),
+                'midtrans_order_id' => $orderId,
             ]);
 
             $this->sendMidtransPaymentNotification($payment);

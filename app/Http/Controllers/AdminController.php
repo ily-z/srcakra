@@ -66,19 +66,21 @@ class AdminController extends Controller
 
             if ($payment->payment_method === 'midtrans' && ! $payment->midtrans_redirect_url) {
                 try {
+                    $orderId = "BOOKING-{$payment->id_payment}-" . Str::random(6);
                     $midtrans = app(MidtransService::class);
                     $result = $midtrans->createSnapUrl(
-                        orderId: "BOOKING-{$payment->id_payment}-" . Str::random(6),
+                        orderId: $orderId,
                         amount: (float) $payment->total,
                         customerName: $name,
                         customerEmail: $pendaftar->email ?? '',
                         customerPhone: $pendaftar->no_wa,
+                        finishRedirectUrl: route('booking.payment', $payment->id_payment),
                     );
 
                     $payment->update([
                         'midtrans_transaction_id' => $result['token'],
                         'midtrans_redirect_url' => $result['redirect_url'],
-                        'midtrans_order_id' => "BOOKING-{$payment->id_payment}-" . Str::random(6),
+                        'midtrans_order_id' => $orderId,
                     ]);
 
                     $paymentUrl = $result['redirect_url'];

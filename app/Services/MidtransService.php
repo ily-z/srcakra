@@ -16,7 +16,7 @@ class MidtransService
         Config::$is3ds = true;
     }
 
-    public function createSnapUrl(string $orderId, float $amount, string $customerName, string $customerEmail, ?string $customerPhone = null): array
+    public function createSnapUrl(string $orderId, float $amount, string $customerName, string $customerEmail, ?string $customerPhone = null, ?string $finishRedirectUrl = null): array
     {
         $params = [
             'transaction_details' => [
@@ -29,6 +29,12 @@ class MidtransService
                 'phone' => $customerPhone ?? '',
             ],
         ];
+
+        if ($finishRedirectUrl) {
+            $params['callbacks'] = [
+                'finish' => $finishRedirectUrl,
+            ];
+        }
 
         $snap = Snap::createTransaction($params);
 
