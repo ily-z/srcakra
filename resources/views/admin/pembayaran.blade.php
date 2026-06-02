@@ -3,7 +3,8 @@
 @section('content')
 <h1 class="mb-6 text-2xl font-bold">Pembayaran</h1>
 
-<div class="overflow-x-auto rounded-lg bg-white shadow">
+{{-- Desktop Table --}}
+<div class="hidden overflow-x-auto rounded-lg bg-white shadow md:block">
     <table class="min-w-full text-sm">
         <thead class="bg-slate-100 text-left">
             <tr>
@@ -64,5 +65,62 @@
         </tbody>
     </table>
 </div>
+
+{{-- Mobile Cards --}}
+<div class="space-y-4 md:hidden">
+    @forelse($payments as $pay)
+        @php $p = $pay->pendaftar @endphp
+        <div class="rounded-lg bg-white p-4 shadow">
+            <div class="mb-3 flex items-start justify-between">
+                <div>
+                    <p class="font-semibold">{{ $p?->nama ?: $p?->nama_instansi ?: '-' }}</p>
+                    <p class="text-xs text-slate-500 capitalize">{{ $p?->jenis_pendaftar ?? '-' }} &middot; ID #{{ $pay->id_payment }}</p>
+                </div>
+                <span class="shrink-0 rounded-full px-2 py-0.5 text-xs font-bold uppercase {{ $pay->status === 'paid' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800' }}">
+                    {{ $pay->status }}
+                </span>
+            </div>
+            <div class="mb-3 grid grid-cols-2 gap-2 text-xs">
+                <div>
+                    <span class="text-slate-500">Method:</span>
+                    <span class="ml-1 uppercase">{{ $pay->payment_method }}</span>
+                </div>
+                <div>
+                    <span class="text-slate-500">Total:</span>
+                    <span class="ml-1 font-semibold">Rp {{ number_format($pay->total, 0, ',', '.') }}</span>
+                </div>
+                <div>
+                    <span class="text-slate-500">Status Pengajuan:</span>
+                    @if ($p)
+                        <span class="ml-1 rounded-full px-2 py-0.5 text-xs font-bold uppercase {{ $p->status_pengajuan === 'approved' ? 'bg-emerald-100 text-emerald-800' : ($p->status_pengajuan === 'rejected' ? 'bg-rose-100 text-rose-800' : 'bg-amber-100 text-amber-800') }}">
+                            {{ $p->status_pengajuan }}
+                        </span>
+                    @else
+                        <span class="ml-1 text-slate-400">-</span>
+                    @endif
+                </div>
+            </div>
+            @if ($pay->status !== 'paid')
+                <div class="flex gap-2">
+                    @if ($p && $p->status_pengajuan === 'approved')
+                        <form class="flex-1" method="POST" action="{{ route('admin.pembayaran.request', $pay->id_payment) }}">
+                            @csrf
+                            <button class="w-full rounded bg-sky-600 px-3 py-1.5 text-xs text-white">Request Payment</button>
+                        </form>
+                    @endif
+                    <form class="flex-1" method="POST" action="{{ route('admin.pembayaran.paid', $pay->id_payment) }}">
+                        @csrf
+                        <button class="w-full rounded bg-blue-600 px-3 py-1.5 text-xs text-white">Set Paid</button>
+                    </form>
+                </div>
+            @else
+                <p class="text-xs font-semibold text-emerald-700">Lunas</p>
+            @endif
+        </div>
+    @empty
+        <div class="rounded-lg bg-white p-6 text-center text-sm text-slate-500 shadow">Belum ada pembayaran.</div>
+    @endforelse
+</div>
+
 <div class="mt-4">{{ $payments->links() }}</div>
 @endsection

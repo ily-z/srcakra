@@ -25,6 +25,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('/pengajuan', [AdminController::class, 'pengajuan'])->name('pengajuan');
     Route::post('/pengajuan/{pendaftar}/approve', [AdminController::class, 'approve'])->name('pengajuan.approve');
     Route::post('/pengajuan/{pendaftar}/reject', [AdminController::class, 'reject'])->name('pengajuan.reject');
+    Route::get('/pengajuan/ditolak', [AdminController::class, 'pengajuanDitolak'])->name('pengajuan.ditolak');
     Route::get('/pembayaran', [AdminController::class, 'pembayaran'])->name('pembayaran');
     Route::post('/pembayaran/{payment}/paid', [AdminController::class, 'markPaid'])->name('pembayaran.paid');
     Route::post('/pembayaran/{payment}/request', [AdminController::class, 'requestPayment'])->name('pembayaran.request');

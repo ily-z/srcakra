@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<h1 class="mb-6 text-2xl font-bold">Pengajuan</h1>
+<h1 class="mb-6 text-2xl font-bold">Pengajuan Ditolak</h1>
 
 {{-- Desktop Table --}}
 <div class="hidden overflow-x-auto rounded-lg bg-white shadow md:block">
@@ -13,8 +13,7 @@
                 <th class="px-3 py-2">Tanggal</th>
                 <th class="px-3 py-2">Tujuan</th>
                 <th class="px-3 py-2">Pembayaran</th>
-                <th class="px-3 py-2">Status</th>
-                <th class="px-3 py-2">Aksi</th>
+                <th class="px-3 py-2">Catatan</th>
             </tr>
         </thead>
         <tbody>
@@ -42,25 +41,7 @@
                         @endif
                     </td>
                     <td class="px-3 py-2">
-                        <span class="rounded-full px-2 py-0.5 text-xs font-bold uppercase {{ $item->status_pengajuan === 'approved' ? 'bg-emerald-100 text-emerald-800' : ($item->status_pengajuan === 'rejected' ? 'bg-rose-100 text-rose-800' : 'bg-amber-100 text-amber-800') }}">
-                            {{ $item->status_pengajuan }}
-                        </span>
-                    </td>
-                    <td class="px-3 py-2">
-                        @if ($item->status_pengajuan === 'pending')
-                            <form class="mb-2" method="POST" action="{{ route('admin.pengajuan.approve', $item->id_pendaftar) }}">
-                                @csrf
-                                <input type="text" name="catatan_admin" class="mb-1 w-full rounded border p-1 text-xs" placeholder="Catatan approve (opsional)" />
-                                <button class="rounded bg-emerald-600 px-3 py-1 text-xs text-white">Approve</button>
-                            </form>
-                            <form method="POST" action="{{ route('admin.pengajuan.reject', $item->id_pendaftar) }}">
-                                @csrf
-                                <input type="text" name="catatan_admin" class="mb-1 w-full rounded border p-1 text-xs" placeholder="Alasan reject (wajib)" required />
-                                <button class="rounded bg-rose-600 px-3 py-1 text-xs text-white">Reject</button>
-                            </form>
-                        @else
-                            <span class="text-xs text-slate-500">{{ $item->catatan_admin ?: '-' }}</span>
-                        @endif
+                        <span class="text-xs text-slate-500">{{ $item->catatan_admin ?: '-' }}</span>
                     </td>
                 </tr>
             @endforeach
@@ -78,8 +59,8 @@
                     <p class="font-semibold">{{ $item->nama ?: $item->nama_instansi }}</p>
                     <p class="text-xs text-slate-500">{{ $item->email }}</p>
                 </div>
-                <span class="shrink-0 rounded-full px-2 py-0.5 text-xs font-bold uppercase {{ $item->status_pengajuan === 'approved' ? 'bg-emerald-100 text-emerald-800' : ($item->status_pengajuan === 'rejected' ? 'bg-rose-100 text-rose-800' : 'bg-amber-100 text-amber-800') }}">
-                    {{ $item->status_pengajuan }}
+                <span class="shrink-0 rounded-full bg-rose-100 px-2 py-0.5 text-xs font-bold uppercase text-rose-800">
+                    rejected
                 </span>
             </div>
             <div class="mb-3 grid grid-cols-2 gap-2 text-xs">
@@ -110,25 +91,10 @@
                     <a class="text-xs text-blue-600 underline" target="_blank" href="{{ asset('storage/'.$item->surat_pengajuan) }}">Lihat Dokumen</a>
                 </div>
             @endif
-            @if ($item->status_pengajuan === 'pending')
-                <div class="flex gap-2">
-                    <form class="flex-1" method="POST" action="{{ route('admin.pengajuan.approve', $item->id_pendaftar) }}">
-                        @csrf
-                        <input type="text" name="catatan_admin" class="mb-1 w-full rounded border p-1 text-xs" placeholder="Catatan (opsional)" />
-                        <button class="w-full rounded bg-emerald-600 px-3 py-1.5 text-xs text-white">Approve</button>
-                    </form>
-                    <form class="flex-1" method="POST" action="{{ route('admin.pengajuan.reject', $item->id_pendaftar) }}">
-                        @csrf
-                        <input type="text" name="catatan_admin" class="mb-1 w-full rounded border p-1 text-xs" placeholder="Alasan (wajib)" required />
-                        <button class="w-full rounded bg-rose-600 px-3 py-1.5 text-xs text-white">Reject</button>
-                    </form>
-                </div>
-            @else
-                <p class="text-xs text-slate-500">Catatan: {{ $item->catatan_admin ?: '-' }}</p>
-            @endif
+            <p class="text-xs text-slate-500">Catatan: {{ $item->catatan_admin ?: '-' }}</p>
         </div>
     @empty
-        <div class="rounded-lg bg-white p-6 text-center text-sm text-slate-500 shadow">Belum ada pengajuan.</div>
+        <div class="rounded-lg bg-white p-6 text-center text-sm text-slate-500 shadow">Belum ada pengajuan ditolak.</div>
     @endforelse
 </div>
 

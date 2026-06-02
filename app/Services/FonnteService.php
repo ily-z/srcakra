@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Kunjungan;
 use App\Models\Payment;
+use App\Models\Pendaftar;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 
@@ -51,6 +52,38 @@ class FonnteService
             'Authorization' => config('services.fonnte.token'),
         ])->post('https://api.fonnte.com/send', [
             'target' => $target,
+            'message' => $message,
+        ]);
+    }
+
+    public static function sendPengajuanDitolak(Pendaftar $pendaftar): void
+    {
+        $name = $pendaftar->nama ?: $pendaftar->nama_instansi ?: 'Pengunjung';
+        $tanggal = Carbon::parse($pendaftar->tanggal_daftar)->locale('id')->translatedFormat('d F Y');
+        $waNumber = config('services.fonnte.number', '6283168949600');
+
+        $message = "Halo {$name},\n\n";
+        $message .= "Mohon maaf, pengajuan kunjungan Anda ke Museum Cakraningrat telah ditolak.\n\n";
+        $message .= "Informasi Pengajuan:\n\n";
+        $message .= "ID Pengajuan: {$pendaftar->id_pendaftar}\n";
+        $message .= "Tanggal: {$tanggal}\n";
+        $message .= "Jenis Layanan: " . ucfirst($pendaftar->jenis_pendaftar) . "\n";
+        $message .= "Status: Ditolak\n";
+
+        if ($pendaftar->catatan_admin) {
+            $message .= "Alasan: {$pendaftar->catatan_admin}\n\n";
+        }
+
+        $message .= "Jika Anda memiliki pertanyaan, silakan hubungi kami melalui:\n";
+        $message .= "Email: joyboyboy11@gmail.com\n";
+        $message .= "WhatsApp: {$waNumber}\n\n";
+        $message .= "Terima kasih.\n\n";
+        $message .= "Hormat kami,\nStaff Museum Cakraningrat";
+
+        Http::withHeaders([
+            'Authorization' => config('services.fonnte.token'),
+        ])->post('https://api.fonnte.com/send', [
+            'target' => $pendaftar->no_wa,
             'message' => $message,
         ]);
     }

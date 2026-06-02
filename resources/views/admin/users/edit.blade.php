@@ -5,7 +5,7 @@
     <h1 class="text-2xl font-bold">Edit User Admin</h1>
 </div>
 
-<div class="rounded-lg bg-white p-6 shadow">
+<div class="rounded-lg bg-white p-4 shadow md:p-6">
     <form method="POST" action="{{ route('admin.users.update', $user->id) }}">
         @csrf
         @method('PUT')
@@ -40,9 +40,9 @@
             </label>
         </div>
 
-        <div class="flex gap-3">
+        <div class="flex flex-col gap-2 sm:flex-row sm:gap-3">
             <button type="submit" class="rounded bg-[#5C4033] px-6 py-2 text-sm text-white hover:bg-[#4a3328]">Simpan</button>
-            <a href="{{ route('admin.users.index') }}" class="rounded bg-slate-200 px-6 py-2 text-sm text-slate-700 hover:bg-slate-300">Batal</a>
+            <a href="{{ route('admin.users.index') }}" class="rounded bg-slate-200 px-6 py-2 text-sm text-slate-700 hover:bg-slate-300 text-center">Batal</a>
         </div>
     </form>
 </div>

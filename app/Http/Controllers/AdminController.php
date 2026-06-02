@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Mail\PengajuanDiterima;
+use App\Mail\PengajuanDitolak;
 use App\Models\Kunjungan;
 use App\Models\Payment;
 use App\Models\Pendaftar;
 use App\Services\FonnteService;
 use App\Services\MidtransService;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 class AdminController extends Controller
@@ -112,7 +116,35 @@ class AdminController extends Controller
             'catatan_admin' => $request->input('catatan_admin'),
         ]);
 
+        if ($payment = $pendaftar->payment) {
+            if ($payment->status !== 'paid') {
+                $payment->update(['status' => 'failed']);
+            }
+        }
+
+        if ($pendaftar->email) {
+            try {
+                Mail::to($pendaftar->email)->send(new PengajuanDitolak($pendaftar));
+            } catch (\Throwable) {
+                // Keep non-blocking when mail server is unavailable.
+            }
+        }
+
+        if ($pendaftar->no_wa) {
+            try {
+                FonnteService::sendPengajuanDitolak($pendaftar);
+            } catch (\Throwable) {
+                // Keep non-blocking when WhatsApp server is unavailable.
+            }
+        }
+
         return back()->with('success', 'Pengajuan ditolak.');
+    }
+
+    public function pengajuanDitolak(): View
+    {
+        $pengajuan = Pendaftar::query()->with('payment')->where('status_pengajuan', 'rejected')->latest('id_pendaftar')->paginate(15);
+        return view('admin.pengajuan-ditolak', compact('pengajuan'));
     }
 
     public function pembayaran(): View
