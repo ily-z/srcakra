@@ -10,8 +10,7 @@
     <div class="flex min-h-screen">
         <aside class="w-72 bg-[#5C4033] text-white p-6">
             <div class="mb-8">
-                <p class="text-xs uppercase tracking-wide text-white/70">Logo</p>
-                <h1 class="text-2xl font-bold">Museum Cakraningrat</h1>
+                <img src="{{ asset('image/logo/logomuseum.png') }}" alt="Museum Cakraningrat" class="h-10 w-auto">
             </div>
             <nav class="space-y-2 text-sm">
                 <a class="block rounded-md px-3 py-2 hover:bg-white/10" href="{{ route('admin.analytics') }}">Analitik</a>

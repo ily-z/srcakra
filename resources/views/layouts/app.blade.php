@@ -10,7 +10,9 @@
 
     <header class="no-print border-b border-[#5C4033]/20 bg-[#5C4033] text-white shadow">
         <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-4">
-            <a href="{{ route('home') }}" class="text-lg font-bold tracking-tight">Museum Cakraningrat</a>
+            <a href="{{ route('home') }}" class="flex items-center gap-2">
+                <img src="{{ asset('image/logo/logomuseum.png') }}" alt="Museum Cakraningrat" class="h-8 w-auto">
+            </a>
             <nav class="flex flex-wrap items-center gap-4 text-sm font-medium">
                 <a href="{{ route('home') }}" class="rounded-md px-2 py-1 hover:bg-white/10">Beranda</a>
                 <a href="{{ route('booking.index') }}" class="rounded-md bg-white/15 px-3 py-1.5 text-white hover:bg-white/25">Ajukan kunjungan</a>

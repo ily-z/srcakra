@@ -9,7 +9,7 @@
 </style>
 <div class="mx-auto max-w-2xl">
     <div class="mb-6 text-center">
-        <p class="text-xs font-semibold uppercase tracking-widest text-[#5C4033]/80">Museum Cakraningrat</p>
+        <img src="{{ asset('image/logo/logomuseum.png') }}" alt="Museum Cakraningrat" class="mx-auto h-10 w-auto mb-2">
         <h1 class="mt-1 text-3xl font-bold text-[#5C4033]">Kwitansi &amp; tiket masuk</h1>
         <p class="mt-2 text-sm text-slate-600">Tunjukkan QR di pintu masuk. Simpan atau kirim salinan ke email / WhatsApp.</p>
     </div>
