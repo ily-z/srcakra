@@ -12,7 +12,7 @@
         </script>
     @endif
 </head>
-<body class="min-h-screen bg-[#F5F5DC] text-slate-800 antialiased">
+<body class="min-h-screen text-slate-800 antialiased">
     @inertia
 </body>
 </html>

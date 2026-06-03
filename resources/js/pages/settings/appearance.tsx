@@ -1,4 +1,5 @@
 import { Head } from '@inertiajs/react';
+import { motion } from 'framer-motion';
 import AppearanceTabs from '@/components/appearance-tabs';
 import Heading from '@/components/heading';
 import AppLayout from '@/layouts/app-layout';
@@ -13,6 +14,18 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
+const container = {
+    hidden: {},
+    show: {
+        transition: { staggerChildren: 0.1 },
+    },
+};
+
+const item = {
+    hidden: { opacity: 0, y: 12 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' as const } },
+};
+
 export default function Appearance() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -21,14 +34,24 @@ export default function Appearance() {
             <h1 className="sr-only">Appearance settings</h1>
 
             <SettingsLayout>
-                <div className="space-y-6">
-                    <Heading
-                        variant="small"
-                        title="Appearance settings"
-                        description="Update your account's appearance settings"
-                    />
-                    <AppearanceTabs />
-                </div>
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, amount: 0.2 }}
+                    className="space-y-6"
+                >
+                    <motion.div variants={item}>
+                        <Heading
+                            variant="small"
+                            title="Appearance settings"
+                            description="Update your account's appearance settings"
+                        />
+                    </motion.div>
+                    <motion.div variants={item}>
+                        <AppearanceTabs />
+                    </motion.div>
+                </motion.div>
             </SettingsLayout>
         </AppLayout>
     );

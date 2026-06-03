@@ -8,7 +8,7 @@ import {
 
 
 export const home = '/';
-export const dashboard = '/dashboard';
+export const dashboard = '/admin';
 export const login = '/login';
 export const register = '/register';
 
@@ -27,6 +27,18 @@ const InputField = ({ label, icon: Icon, error, ...props }) => (
         {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
     </div>
 );
+
+const container = {
+    hidden: {},
+    show: {
+        transition: { staggerChildren: 0.1 },
+    },
+};
+
+const item = {
+    hidden: { opacity: 0, y: 12 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+};
 
 export default function CreateKunjungan({ disabledDays }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -59,8 +71,14 @@ export default function CreateKunjungan({ disabledDays }) {
         <div className="min-h-screen bg-slate-50 py-12 px-4">
             <Head title="Pendaftaran Kunjungan" />
             
-            <div className="max-w-3xl mx-auto">
-                <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+            <motion.div
+                variants={container}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.2 }}
+                className="max-w-3xl mx-auto"
+            >
+                <motion.div variants={item} className="bg-white rounded-2xl shadow-xl overflow-hidden">
                     {/* Header */}
                     <div className="bg-indigo-600 p-8 text-white">
                         <h1 className="text-2xl font-bold">Reservasi Kunjungan</h1>
@@ -215,12 +233,12 @@ export default function CreateKunjungan({ disabledDays }) {
                             )}
                         </button>
                     </form>
-                </div>
+                </motion.div>
                 
-                <p className="text-center text-gray-400 text-xs mt-6">
+                <motion.p variants={item} className="text-center text-gray-400 text-xs mt-6">
                     &copy; 2026 Sistem Reservasi Kunjungan Cakra. All rights reserved.
-                </p>
-            </div>
+                </motion.p>
+            </motion.div>
         </div>
     );
 }

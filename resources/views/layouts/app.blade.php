@@ -8,15 +8,20 @@
     @vite('resources/css/app.css')
 </head>
 <body class="min-h-screen bg-[#F5F5DC] text-slate-800">
+    @stack('background')
 
     <header class="no-print border-b border-[#5C4033]/20 bg-[#5C4033] text-white shadow">
-        <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-4">
+        <div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
             <a href="{{ route('home') }}" class="flex items-center gap-2">
                 <img src="{{ asset('image/logo/logomuseum.png') }}" alt="Museum Cakraningrat" class="h-8 w-auto">
             </a>
-            <nav class="flex flex-wrap items-center gap-4 text-sm font-medium">
-                <a href="{{ route('home') }}" class="rounded-md px-2 py-1 hover:bg-white/10">Beranda</a>
-                <a href="{{ route('booking.index') }}" class="rounded-md bg-white/15 px-3 py-1.5 text-white hover:bg-white/25">Ajukan kunjungan</a>
+            <button id="menuToggle" type="button" class="inline-flex items-center justify-center rounded-md p-2 text-white/90 lg:hidden">
+                <svg id="menuIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                <svg id="closeIcon" xmlns="http://www.w3.org/2000/svg" class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+            <nav id="navMenu" class="hidden w-full flex-col gap-1 pt-4 text-sm font-medium lg:flex lg:w-auto lg:flex-row lg:items-center lg:gap-4 lg:pt-0">
+                <a href="{{ route('home') }}" class="block rounded-md px-3 py-2.5 text-white/90 lg:px-2 lg:py-1">Beranda</a>
+                <a href="{{ route('booking.index') }}" class="block rounded-md bg-white/15 px-3 py-2.5 text-white lg:px-3 lg:py-1.5">Ajukan kunjungan</a>
             </nav>
         </div>
     </header>
@@ -37,5 +42,21 @@
             </p>
         </div>
     </footer>
+<script>
+(function() {
+    var toggle = document.getElementById('menuToggle');
+    var menu = document.getElementById('navMenu');
+    var menuIcon = document.getElementById('menuIcon');
+    var closeIcon = document.getElementById('closeIcon');
+    if (toggle && menu) {
+        toggle.addEventListener('click', function() {
+            var open = menu.classList.contains('hidden');
+            menu.classList.toggle('hidden', !open);
+            menuIcon.classList.toggle('hidden', !open);
+            closeIcon.classList.toggle('hidden', open);
+        });
+    }
+})();
+</script>
 </body>
 </html>

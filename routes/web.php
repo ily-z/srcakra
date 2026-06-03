@@ -8,8 +8,6 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [BookingController::class, 'home'])->name('home');
-Route::inertia('/dashboard', 'dashboard')->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::get('/booking', [BookingController::class, 'index'])->name('booking.index');
 Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
 Route::get('/booking/payment/{payment}', [BookingController::class, 'payment'])->name('booking.payment');

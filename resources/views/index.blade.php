@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
+@push('background')
+    @include('partials.bubble-background')
+@endpush
+
 @section('content')
-<div class="py-8 text-center">
+<div class="animate-in fade-in slide-in-from-bottom duration-700 py-8 text-center">
     <h1 class="mb-3 text-4xl font-bold text-[#5C4033]">
         Museum Cakraningrat
     </h1>
@@ -18,11 +22,11 @@
     <p class="mt-3 text-sm text-slate-600">Langsung ke form pendaftaran</p>
 </div>
 
-<div class="mb-8">
+<div class="animate-in fade-in slide-in-from-bottom duration-700 delay-150 mb-8">
     @include('partials.visitor_calendar', ['calendarInteractive' => false])
 </div>
 
-<div class="mb-8 rounded-xl bg-amber-50/80 p-5 text-left shadow-md ring-1 ring-amber-200/60">
+<div class="animate-in fade-in slide-in-from-bottom duration-700 delay-300 mb-8 rounded-xl bg-amber-50/80 p-5 text-left shadow-md ring-1 ring-amber-200/60">
     <h2 class="mb-2 text-lg font-semibold text-[#5C4033]">Alur pengunjung</h2>
     <ol class="list-decimal space-y-2 pl-5 text-sm text-slate-700">
         <li>Isi form (personal atau instansi) dan pilih <span class="font-medium">Cash</span> atau <span class="font-medium">pembayaran online</span> (Midtrans / e-wallet).</li>
@@ -31,7 +35,7 @@
     </ol>
 </div>
 
-<div class="mb-8 rounded-xl bg-white p-6 shadow-md">
+<div class="animate-in fade-in slide-in-from-bottom duration-700 delay-500 mb-8 rounded-xl bg-white p-6 shadow-md">
     <h2 class="mb-3 text-2xl font-semibold text-[#5C4033]">
         Tentang Museum
     </h2>
@@ -41,7 +45,7 @@
     </p>
 </div>
 
-<div class="grid gap-6 md:grid-cols-2">
+<div class="animate-in fade-in slide-in-from-bottom duration-700 delay-[650ms] grid gap-6 md:grid-cols-2">
     <div class="rounded-xl bg-white p-6 shadow-md">
         <h3 class="mb-2 text-xl font-semibold">Jam Operasional</h3>
         <p class="text-slate-700">Senin - Jumat: 08:00 - 16:00</p>

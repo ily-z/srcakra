@@ -1,4 +1,5 @@
 import { Form, Head } from '@inertiajs/react';
+import { motion } from 'framer-motion';
 import { ShieldBan, ShieldCheck } from 'lucide-react';
 import { useState } from 'react';
 import Heading from '@/components/heading';
@@ -24,6 +25,18 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
+const container = {
+    hidden: {},
+    show: {
+        transition: { staggerChildren: 0.1 },
+    },
+};
+
+const item = {
+    hidden: { opacity: 0, y: 12 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' as const } },
+};
+
 export default function TwoFactor({
     requiresConfirmation = false,
     twoFactorEnabled = false,
@@ -47,94 +60,106 @@ export default function TwoFactor({
             <h1 className="sr-only">Two-factor authentication settings</h1>
 
             <SettingsLayout>
-                <div className="space-y-6">
-                    <Heading
-                        variant="small"
-                        title="Two-factor authentication"
-                        description="Manage your two-factor authentication settings"
-                    />
-                    {twoFactorEnabled ? (
-                        <div className="flex flex-col items-start justify-start space-y-4">
-                            <Badge variant="default">Enabled</Badge>
-                            <p className="text-muted-foreground">
-                                With two-factor authentication enabled, you will
-                                be prompted for a secure, random pin during
-                                login, which you can retrieve from the
-                                TOTP-supported application on your phone.
-                            </p>
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, amount: 0.2 }}
+                    className="space-y-6"
+                >
+                    <motion.div variants={item}>
+                        <Heading
+                            variant="small"
+                            title="Two-factor authentication"
+                            description="Manage your two-factor authentication settings"
+                        />
+                    </motion.div>
+                    <motion.div variants={item}>
+                        {twoFactorEnabled ? (
+                            <div className="flex flex-col items-start justify-start space-y-4">
+                                <Badge variant="default">Enabled</Badge>
+                                <p className="text-muted-foreground">
+                                    With two-factor authentication enabled, you will
+                                    be prompted for a secure, random pin during
+                                    login, which you can retrieve from the
+                                    TOTP-supported application on your phone.
+                                </p>
 
-                            <TwoFactorRecoveryCodes
-                                recoveryCodesList={recoveryCodesList}
-                                fetchRecoveryCodes={fetchRecoveryCodes}
-                                errors={errors}
-                            />
+                                <TwoFactorRecoveryCodes
+                                    recoveryCodesList={recoveryCodesList}
+                                    fetchRecoveryCodes={fetchRecoveryCodes}
+                                    errors={errors}
+                                />
 
-                            <div className="relative inline">
-                                <Form {...disable.form()}>
-                                    {({ processing }) => (
-                                        <Button
-                                            variant="destructive"
-                                            type="submit"
-                                            disabled={processing}
-                                        >
-                                            <ShieldBan /> Disable 2FA
-                                        </Button>
-                                    )}
-                                </Form>
-                            </div>
-                        </div>
-                    ) : (
-                        <div className="flex flex-col items-start justify-start space-y-4">
-                            <Badge variant="destructive">Disabled</Badge>
-                            <p className="text-muted-foreground">
-                                When you enable two-factor authentication, you
-                                will be prompted for a secure pin during login.
-                                This pin can be retrieved from a TOTP-supported
-                                application on your phone.
-                            </p>
-
-                            <div>
-                                {hasSetupData ? (
-                                    <Button
-                                        onClick={() => setShowSetupModal(true)}
-                                    >
-                                        <ShieldCheck />
-                                        Continue setup
-                                    </Button>
-                                ) : (
-                                    <Form
-                                        {...enable.form()}
-                                        onSuccess={() =>
-                                            setShowSetupModal(true)
-                                        }
-                                    >
+                                <div className="relative inline">
+                                    <Form {...disable.form()}>
                                         {({ processing }) => (
                                             <Button
+                                                variant="destructive"
                                                 type="submit"
                                                 disabled={processing}
                                             >
-                                                <ShieldCheck />
-                                                Enable 2FA
+                                                <ShieldBan /> Disable 2FA
                                             </Button>
                                         )}
                                     </Form>
-                                )}
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        ) : (
+                            <div className="flex flex-col items-start justify-start space-y-4">
+                                <Badge variant="destructive">Disabled</Badge>
+                                <p className="text-muted-foreground">
+                                    When you enable two-factor authentication, you
+                                    will be prompted for a secure pin during login.
+                                    This pin can be retrieved from a TOTP-supported
+                                    application on your phone.
+                                </p>
 
-                    <TwoFactorSetupModal
-                        isOpen={showSetupModal}
-                        onClose={() => setShowSetupModal(false)}
-                        requiresConfirmation={requiresConfirmation}
-                        twoFactorEnabled={twoFactorEnabled}
-                        qrCodeSvg={qrCodeSvg}
-                        manualSetupKey={manualSetupKey}
-                        clearSetupData={clearSetupData}
-                        fetchSetupData={fetchSetupData}
-                        errors={errors}
-                    />
-                </div>
+                                <div>
+                                    {hasSetupData ? (
+                                        <Button
+                                            onClick={() => setShowSetupModal(true)}
+                                        >
+                                            <ShieldCheck />
+                                            Continue setup
+                                        </Button>
+                                    ) : (
+                                        <Form
+                                            {...enable.form()}
+                                            onSuccess={() =>
+                                                setShowSetupModal(true)
+                                            }
+                                        >
+                                            {({ processing }) => (
+                                                <Button
+                                                    type="submit"
+                                                    disabled={processing}
+                                                >
+                                                    <ShieldCheck />
+                                                    Enable 2FA
+                                                </Button>
+                                            )}
+                                        </Form>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+                    </motion.div>
+
+                    <motion.div variants={item}>
+                        <TwoFactorSetupModal
+                            isOpen={showSetupModal}
+                            onClose={() => setShowSetupModal(false)}
+                            requiresConfirmation={requiresConfirmation}
+                            twoFactorEnabled={twoFactorEnabled}
+                            qrCodeSvg={qrCodeSvg}
+                            manualSetupKey={manualSetupKey}
+                            clearSetupData={clearSetupData}
+                            fetchSetupData={fetchSetupData}
+                            errors={errors}
+                        />
+                    </motion.div>
+                </motion.div>
             </SettingsLayout>
         </AppLayout>
     );

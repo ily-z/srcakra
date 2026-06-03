@@ -1,4 +1,5 @@
-import { Form, Head } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
+import { motion } from 'framer-motion';
 import InputError from '@/components/input-error';
 import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
@@ -10,6 +11,18 @@ import AuthLayout from '@/layouts/auth-layout';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
 
+const container = {
+    hidden: {},
+    show: {
+        transition: { staggerChildren: 0.1 },
+    },
+};
+
+const item = {
+    hidden: { opacity: 0, y: 12 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' as const } },
+};
+
 type Props = {
     status?: string;
     canResetPassword: boolean;
@@ -19,6 +32,17 @@ export default function Login({
     status,
     canResetPassword,
 }: Props) {
+    const { data, setData, post, processing, errors } = useForm({
+        nama: '',
+        password: '',
+        remember: false,
+    });
+
+    function handleSubmit(e: React.FormEvent) {
+        e.preventDefault();
+        post(store.url());
+    }
+
     return (
         <AuthLayout
             title="Log in to your account"
@@ -26,25 +50,34 @@ export default function Login({
         >
             <Head title="Log in" />
 
-            <Form
-                {...store.form()}
-                resetOnSuccess={['password']}
-                className="flex flex-col gap-6"
+            <motion.div
+                variants={container}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.2 }}
             >
-                {({ processing, errors }) => (
-                    <>
+                <motion.div variants={item}>
+                    <form
+                        onSubmit={handleSubmit}
+                        method="POST"
+                        action={store.url()}
+                        noValidate
+                        className="flex flex-col gap-6"
+                    >
                         <div className="grid gap-6">
                             <div className="grid gap-2">
                                 <Label htmlFor="nama">Username</Label>
                                 <Input
                                     id="nama"
-                                    type="text"
                                     name="nama"
+                                    type="text"
                                     required
                                     autoFocus
                                     tabIndex={1}
                                     autoComplete="username"
                                     placeholder="Username"
+                                    value={data.nama}
+                                    onChange={e => setData('nama', e.target.value)}
                                 />
                                 <InputError message={errors.nama} />
                             </div>
@@ -64,12 +97,14 @@ export default function Login({
                                 </div>
                                 <Input
                                     id="password"
-                                    type="password"
                                     name="password"
+                                    type="password"
                                     required
                                     tabIndex={2}
                                     autoComplete="current-password"
                                     placeholder="Password"
+                                    value={data.password}
+                                    onChange={e => setData('password', e.target.value)}
                                 />
                                 <InputError message={errors.password} />
                             </div>
@@ -77,8 +112,9 @@ export default function Login({
                             <div className="flex items-center space-x-3">
                                 <Checkbox
                                     id="remember"
-                                    name="remember"
                                     tabIndex={3}
+                                    checked={data.remember}
+                                    onCheckedChange={checked => setData('remember', checked === true)}
                                 />
                                 <Label htmlFor="remember">Remember me</Label>
                             </div>
@@ -94,17 +130,15 @@ export default function Login({
                                 Log in
                             </Button>
                         </div>
+                    </form>
+                </motion.div>
 
-
-                    </>
+                {status && (
+                    <motion.div variants={item} className="mb-4 text-center text-sm font-medium text-green-600">
+                        {status}
+                    </motion.div>
                 )}
-            </Form>
-
-            {status && (
-                <div className="mb-4 text-center text-sm font-medium text-green-600">
-                    {status}
-                </div>
-            )}
+            </motion.div>
         </AuthLayout>
     );
 }
