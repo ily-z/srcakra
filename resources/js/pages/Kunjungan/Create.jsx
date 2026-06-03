@@ -86,21 +86,28 @@ export default function CreateKunjungan({ disabledDays }) {
                     </div>
 
                     <form onSubmit={handleSubmit} className="p-8 space-y-6">
-                        {/* Tab Switcher */}
-                        <div className="flex p-1 bg-gray-100 rounded-xl w-full sm:w-72">
+                        {/* Tab Switcher with Sliding Indicator */}
+                        <div className="relative flex p-1 bg-gray-100 rounded-xl w-full sm:w-72">
+                            <motion.div
+                                className="absolute inset-y-1 left-1 w-[calc(50%-6px)] bg-white rounded-lg shadow z-0"
+                                animate={{
+                                    left: data.jenis_kunjungan === 'personal' ? '4px' : 'calc(50% + 2px)',
+                                }}
+                                transition={{ type: 'spring', stiffness: 500, damping: 35 }}
+                            />
                             <button
                                 type="button"
                                 onClick={() => setData('jenis_kunjungan', 'personal')}
-                                className={`flex-1 flex items-center justify-center gap-2 py-2 text-sm font-medium rounded-lg transition-all
-                                ${data.jenis_kunjungan === 'personal' ? 'bg-white shadow text-indigo-600' : 'text-gray-500 hover:text-gray-700'}`}
+                                className={`relative flex-1 flex items-center justify-center gap-2 py-2 text-sm font-medium rounded-lg z-10 transition-colors
+                                ${data.jenis_kunjungan === 'personal' ? 'text-indigo-600' : 'text-gray-500 hover:text-gray-700'}`}
                             >
                                 <User size={16} /> Personal
                             </button>
                             <button
                                 type="button"
                                 onClick={() => setData('jenis_kunjungan', 'instansi')}
-                                className={`flex-1 flex items-center justify-center gap-2 py-2 text-sm font-medium rounded-lg transition-all
-                                ${data.jenis_kunjungan === 'instansi' ? 'bg-white shadow text-indigo-600' : 'text-gray-500 hover:text-gray-700'}`}
+                                className={`relative flex-1 flex items-center justify-center gap-2 py-2 text-sm font-medium rounded-lg z-10 transition-colors
+                                ${data.jenis_kunjungan === 'instansi' ? 'text-indigo-600' : 'text-gray-500 hover:text-gray-700'}`}
                             >
                                 <Building2 size={16} /> Instansi
                             </button>
@@ -219,19 +226,21 @@ export default function CreateKunjungan({ disabledDays }) {
                         </div>
 
                         {/* Submit Button */}
-                        <button
+                        <motion.button
                             type="submit"
                             disabled={processing}
-                            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg shadow-indigo-200 flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-70"
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg shadow-indigo-200 flex items-center justify-center gap-2 transition-all disabled:opacity-70"
                         >
                             {processing ? (
                                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                             ) : (
-                                <>
+                                <span className="inline-flex items-center gap-2">
                                     <Send size={18} /> Daftar Kunjungan
-                                </>
+                                </span>
                             )}
-                        </button>
+                        </motion.button>
                     </form>
                 </motion.div>
                 

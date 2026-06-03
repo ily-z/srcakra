@@ -5,6 +5,19 @@
 @endpush
 
 @section('content')
+<style>
+    @keyframes home-btn-glow {
+        0%, 100% { box-shadow: 0 4px 14px rgba(92, 64, 51, 0.25); }
+        50% { box-shadow: 0 4px 24px rgba(92, 64, 51, 0.45); }
+    }
+    .btn-home-cta {
+        animation: home-btn-glow 2.5s ease-in-out infinite;
+    }
+    .btn-home-cta:hover {
+        animation: none;
+    }
+</style>
+
 <div class="animate-in fade-in slide-in-from-bottom duration-700 py-8 text-center">
     <h1 class="mb-3 text-4xl font-bold text-[#5C4033]">
         Museum Cakraningrat
@@ -15,9 +28,10 @@
 
     <a
         href="{{ route('booking.index') }}"
-        class="inline-flex items-center justify-center rounded-lg bg-[#5C4033] px-8 py-3 font-semibold text-white shadow-sm transition hover:bg-[#4a342a]"
+        class="group inline-flex items-center justify-center gap-2 rounded-lg bg-[#5C4033] px-8 py-3 font-semibold text-white shadow-md transition-all duration-300 hover:bg-[#4a342a] hover:shadow-lg hover:scale-105 active:scale-95 btn-home-cta"
     >
-        Ajukan kunjungan
+        <span>Ajukan kunjungan</span>
+        <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
     </a>
     <p class="mt-3 text-sm text-slate-600">Langsung ke form pendaftaran</p>
 </div>

@@ -49,11 +49,12 @@
 
             <div>
                 <span class="mb-2 block text-xs sm:text-sm font-medium text-slate-800">Jenis kunjungan</span>
-                <div class="inline-flex w-full rounded-xl bg-slate-100 p-1 ring-1 ring-slate-200/80" role="group">
-                    <button type="button" id="tabPersonal" class="flex-1 rounded-lg px-3 py-2.5 sm:py-2 text-xs sm:text-sm font-semibold transition">
+                <div class="relative inline-flex w-full rounded-xl bg-slate-100 p-1 ring-1 ring-slate-200/80" role="group">
+                    <div id="toggleSlider" class="absolute inset-y-1 left-1 w-[calc(50%-6px)] rounded-lg bg-[#5C4033] shadow-sm transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]"></div>
+                    <button type="button" id="tabPersonal" class="relative flex-1 rounded-lg px-3 py-2.5 sm:py-2 text-xs sm:text-sm font-semibold transition z-10 text-white">
                         Personal
                     </button>
-                    <button type="button" id="tabInstansi" class="flex-1 rounded-lg px-3 py-2.5 sm:py-2 text-xs sm:text-sm font-semibold transition">
+                    <button type="button" id="tabInstansi" class="relative flex-1 rounded-lg px-3 py-2.5 sm:py-2 text-xs sm:text-sm font-semibold transition z-10 text-slate-600">
                         Instansi
                     </button>
                 </div>
@@ -177,11 +178,12 @@
                 <span class="mb-2 sm:mb-3 block text-xs sm:text-sm font-medium text-slate-800">Metode pembayaran</span>
                 <p class="mb-3 text-xs text-slate-600">Pilih <span class="font-medium">Cash</span> (bayar di tempat) atau <span class="font-medium">Online</span> (e-wallet, bank transfer, QRIS).</p>
 
-                <div class="mb-3 grid grid-cols-2 gap-2 rounded-xl bg-white p-1 ring-1 ring-slate-200" role="group">
-                    <button type="button" id="payCashBtn" class="rounded-lg px-3 py-2.5 sm:py-2 text-xs sm:text-sm font-semibold transition">
+                <div class="relative mb-3 grid grid-cols-2 rounded-xl bg-white p-1 ring-1 ring-slate-200" role="group">
+                    <div id="paySlider" class="absolute inset-y-1 left-1 w-[calc(50%-6px)] rounded-lg bg-[#5C4033] shadow-sm transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]"></div>
+                    <button type="button" id="payCashBtn" class="relative flex-1 rounded-lg px-3 py-2.5 sm:py-2 text-xs sm:text-sm font-semibold transition z-10 text-white">
                         Cash
                     </button>
-                    <button type="button" id="payMidtransBtn" class="rounded-lg px-3 py-2.5 sm:py-2 text-xs sm:text-sm font-semibold transition">
+                    <button type="button" id="payMidtransBtn" class="relative flex-1 rounded-lg px-3 py-2.5 sm:py-2 text-xs sm:text-sm font-semibold transition z-10 text-slate-700">
                         Online (Midtrans)
                     </button>
                 </div>
@@ -195,13 +197,29 @@
 
             <button
                 type="submit"
-                class="w-full rounded-xl bg-[#5C4033] py-3.5 text-center text-sm sm:text-base font-bold text-white shadow-md transition hover:bg-[#4a342a]"
+                class="group w-full rounded-xl bg-[#5C4033] py-3.5 text-center text-sm sm:text-base font-bold text-white shadow-md transition-all duration-300 hover:bg-[#4a342a] hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] btn-submit"
             >
-                Mengajukan
+                <span class="inline-flex items-center justify-center gap-2">
+                    Mengajukan
+                    <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                </span>
             </button>
         </form>
     </div>
 </div>
+
+<style>
+    @keyframes btn-glow {
+        0%, 100% { box-shadow: 0 4px 14px rgba(92, 64, 51, 0.3); }
+        50% { box-shadow: 0 4px 24px rgba(92, 64, 51, 0.5); }
+    }
+    .btn-submit {
+        animation: btn-glow 2.5s ease-in-out infinite;
+    }
+    .btn-submit:hover {
+        animation: none;
+    }
+</style>
 
 <script>
     (function() {
@@ -240,36 +258,44 @@
     const midtransDesc = document.getElementById('midtransDesc');
     const paymentMethodInput = document.getElementById('payment_method');
 
-    const activeTabClass = 'bg-[#5C4033] text-white shadow-sm';
-    const inactiveTabClass = 'text-slate-600 hover:bg-white/80';
-    const baseTabClass = 'flex-1 rounded-lg px-3 py-2.5 sm:py-2 text-xs sm:text-sm font-semibold transition';
+    const baseTabClass = 'relative flex-1 rounded-lg px-3 py-2.5 sm:py-2 text-xs sm:text-sm font-semibold transition z-10';
+    const toggleSlider = document.getElementById('toggleSlider');
 
     function setJenisUI(isInstansi) {
         jenisHidden.value = isInstansi ? 'instansi' : 'personal';
         personalFields.classList.toggle('hidden', isInstansi);
         instansiFields.classList.toggle('hidden', !isInstansi);
-        tabPersonal.className = baseTabClass + ' ' + (isInstansi ? inactiveTabClass : activeTabClass);
-        tabInstansi.className = baseTabClass + ' ' + (isInstansi ? activeTabClass : inactiveTabClass);
+
+        if (isInstansi) {
+            toggleSlider.style.left = 'calc(50% + 2px)';
+            tabPersonal.className = baseTabClass + ' text-slate-600';
+            tabInstansi.className = baseTabClass + ' text-white';
+        } else {
+            toggleSlider.style.left = '4px';
+            tabPersonal.className = baseTabClass + ' text-white';
+            tabInstansi.className = baseTabClass + ' text-slate-600';
+        }
     }
 
     tabPersonal.addEventListener('click', () => setJenisUI(false));
     tabInstansi.addEventListener('click', () => setJenisUI(true));
     setJenisUI(jenisHidden.value === 'instansi');
 
-    const payActive = 'bg-[#5C4033] text-white shadow-sm';
-    const payIdle = 'text-slate-700 hover:bg-slate-100';
-    const basePayClass = 'rounded-lg px-3 py-2.5 sm:py-2 text-xs sm:text-sm font-semibold transition';
+    const basePayClass = 'relative flex-1 rounded-lg px-3 py-2.5 sm:py-2 text-xs sm:text-sm font-semibold transition z-10';
+    const paySlider = document.getElementById('paySlider');
 
     function setPaymentUI(mode) {
-        payCashBtn.className = basePayClass + ' ' + payIdle;
-        payMidtransBtn.className = basePayClass + ' ' + payIdle;
         midtransDesc.classList.add('hidden');
 
         if (mode === 'cash') {
-            payCashBtn.className = 'rounded-lg px-3 py-2 text-sm font-semibold transition ' + payActive;
+            paySlider.style.left = '4px';
+            payCashBtn.className = basePayClass + ' text-white';
+            payMidtransBtn.className = basePayClass + ' text-slate-700';
             paymentMethodInput.value = 'cash';
         } else {
-            payMidtransBtn.className = 'rounded-lg px-3 py-2 text-sm font-semibold transition ' + payActive;
+            paySlider.style.left = 'calc(50% + 2px)';
+            payCashBtn.className = basePayClass + ' text-slate-700';
+            payMidtransBtn.className = basePayClass + ' text-white';
             midtransDesc.classList.remove('hidden');
             paymentMethodInput.value = 'midtrans';
         }
