@@ -9,14 +9,21 @@ use App\Models\Payment;
 use App\Models\Pendaftar;
 use App\Services\FonnteService;
 use App\Services\MidtransService;
+use App\Services\PaymentService;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
+    public function __construct(
+        protected PaymentService $paymentService
+    ) {}
+
     public function analytics(): View
     {
         $monthlyRevenue = Payment::query()
@@ -157,57 +164,9 @@ class AdminController extends Controller
 
     public function markPaid(Payment $payment): RedirectResponse
     {
-        DB::transaction(function () use ($payment) {
-            if ($payment->status !== 'paid') {
-                $payment->update(['status' => 'paid']);
-            }
-
-            if ($payment->pendaftar) {
-                if ($payment->pendaftar->status_pengajuan !== 'approved') {
-                    $payment->pendaftar->update(['status_pengajuan' => 'approved']);
-                }
-
-                if (! $payment->kunjungan) {
-                    $kunjungan = Kunjungan::create([
-                        'tanggal_daftar' => $payment->pendaftar->tanggal_daftar,
-                        'tanggal_kunjungan' => $payment->pendaftar->tanggal_kunjungan,
-                        'nama' => $payment->pendaftar->nama,
-                        'nama_instansi' => $payment->pendaftar->nama_instansi,
-                        'email' => $payment->pendaftar->email,
-                        'tujuan_kunjungan' => $payment->pendaftar->tujuan_kunjungan,
-                        'surat_pengajuan' => $payment->pendaftar->surat_pengajuan,
-                        'jumlah_pengunjung' => $payment->pendaftar->jumlah_pengunjung,
-                        'payment_method' => $payment->payment_method,
-                        'id_payment' => $payment->id_payment,
-                        'status_kunjungan' => 'waiting',
-                        'qr_token' => (string) Str::uuid(),
-                    ]);
-
-                    $this->sendInvoiceEmail($kunjungan);
-                }
-            }
-        });
+        $this->paymentService->completePayment($payment);
 
         return back()->with('success', 'Status pembayaran diubah menjadi paid.');
-    }
-
-    private function sendInvoiceEmail(Kunjungan $kunjungan): void
-    {
-        try {
-            $name = $kunjungan->nama ?: $kunjungan->nama_instansi ?: 'Pengunjung';
-            $receiptUrl = route('booking.receipt', $kunjungan->id_payment);
-            Mail::raw("Halo {$name}, invoice dan QR kunjungan Anda: {$receiptUrl}", function ($message) use ($kunjungan) {
-                $message->to($kunjungan->email)->subject('Invoice & QR Kunjungan Museum');
-            });
-        } catch (\Throwable) {
-            // Keep non-blocking when mail server is unavailable.
-        }
-
-        try {
-            FonnteService::sendInvoice($kunjungan);
-        } catch (\Throwable) {
-            // Keep non-blocking when WhatsApp server is unavailable.
-        }
     }
 
     public function requestPayment(Payment $payment): RedirectResponse

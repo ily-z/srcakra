@@ -80,20 +80,101 @@
 
     function startScanner() {
         const readerEl = document.getElementById('reader');
+        const fallbackEl = document.getElementById('scannerFallback');
+        
+        console.log('Initializing scanner...');
+        
+        // Detailed diagnostics
+        const diagnostics = {
+            secureContext: window.isSecureContext,
+            mediaDevices: !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia),
+            protocol: window.location.protocol,
+            hostname: window.location.hostname
+        };
+        console.table(diagnostics);
+
+        if (!window.isSecureContext) {
+            const msg = `Scanner membutuhkan koneksi aman (HTTPS). Protokol saat ini: ${window.location.protocol}`;
+            showToast('error', msg);
+            setStatus('error', 'Insecure Context');
+            readerEl.innerHTML = `<div class="p-4 bg-red-50 text-red-700 rounded text-sm">${msg}</div>`;
+            return;
+        }
+
+        if (!diagnostics.mediaDevices) {
+            const msg = 'Browser Anda tidak mendukung akses kamera atau diblokir oleh kebijakan keamanan.';
+            showToast('error', msg);
+            setStatus('error', 'MediaDevices missing');
+            readerEl.innerHTML = `<div class="p-4 bg-red-50 text-red-700 rounded text-sm">${msg}</div>`;
+            return;
+        }
+
         readerEl.innerHTML = '';
+        readerEl.classList.remove('hidden');
+        fallbackEl.classList.add('hidden');
 
-        scanner = new Html5QrcodeScanner('reader', { fps: 10, qrbox: 250 }, false);
+        try {
+            // Using a more manual approach with Html5Qrcode to have better control
+            const html5QrCode = new Html5Qrcode("reader");
+            const config = { fps: 10, qrbox: { width: 250, height: 250 } };
 
-        scanner.render(
-            (decodedText) => {
-                setStatus('scanning', 'Memproses...');
-                if (scanner) scanner.clear();
-                lookupToken(decodedText);
-            },
-            (error) => {
-                console.warn('Scan error:', error);
-            }
-        );
+            // First try to get cameras to see if we can even access them
+            Html5Qrcode.getCameras().then(cameras => {
+                if (cameras && cameras.length > 0) {
+                    console.log('Available cameras:', cameras);
+                    // Use the back camera if available, otherwise the first one
+                    const cameraId = cameras.length > 1 ? cameras[cameras.length - 1].id : cameras[0].id;
+                    
+                    html5QrCode.start(
+                        cameraId, 
+                        config,
+                        (decodedText) => {
+                            console.log('Scan result:', decodedText);
+                            html5QrCode.stop().then(() => {
+                                lookupToken(decodedText);
+                            });
+                        },
+                        (errorMessage) => {
+                            // Ignored: scanning in progress
+                        }
+                    ).catch(err => {
+                        console.error('Failed to start camera:', err);
+                        handleScannerError(err);
+                    });
+                } else {
+                    handleScannerError('Tidak ada kamera ditemukan.');
+                }
+            }).catch(err => {
+                console.error('Error getting cameras:', err);
+                handleScannerError(err);
+            });
+
+            // Store for cleanup
+            window.scannerInstance = html5QrCode;
+
+        } catch (err) {
+            console.error('Scanner init error:', err);
+            handleScannerError(err);
+        }
+    }
+
+    function handleScannerError(err) {
+        const readerEl = document.getElementById('reader');
+        const fallbackEl = document.getElementById('scannerFallback');
+        const msg = typeof err === 'string' ? err : (err.message || 'Gagal mengakses kamera');
+        
+        showToast('error', msg);
+        setStatus('error', 'Gagal');
+        
+        readerEl.innerHTML = `
+            <div class="p-4 bg-amber-50 text-amber-800 rounded border border-amber-200 text-sm mb-4">
+                <p class="font-bold mb-1">Akses Kamera Gagal</p>
+                <p>${msg}</p>
+                <p class="mt-2 text-xs">Pastikan Anda telah memberikan izin kamera dan menggunakan HTTPS.</p>
+                <button onclick="startScanner()" class="mt-3 w-full bg-amber-600 text-white py-2 rounded font-medium">Coba Lagi</button>
+            </div>
+        `;
+        fallbackEl.classList.remove('hidden');
     }
 
     function lookupToken(token) {

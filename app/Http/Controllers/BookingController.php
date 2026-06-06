@@ -9,6 +9,7 @@ use App\Models\Payment;
 use App\Models\Pendaftar;
 use App\Services\FonnteService;
 use App\Services\MidtransService;
+use App\Services\PaymentService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -22,6 +23,10 @@ use Illuminate\View\View;
 class BookingController extends Controller
 {
     private const PRICE_PER_PERSON = 3000;
+
+    public function __construct(
+        protected PaymentService $paymentService
+    ) {}
 
     public function home(Request $request): View
     {
