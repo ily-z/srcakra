@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Mail\Invoice;
 use App\Models\Kunjungan;
 use App\Models\Payment;
 use App\Services\FonnteService;
@@ -54,18 +55,12 @@ class PaymentService
      */
     public function sendNotifications(Kunjungan $kunjungan): void
     {
-        // Email Notification
         try {
-            $name = $kunjungan->nama ?: $kunjungan->nama_instansi ?: 'Pengunjung';
-            $receiptUrl = route('booking.receipt', $kunjungan->id_payment);
-            Mail::raw("Halo {$name}, invoice dan QR kunjungan Anda: {$receiptUrl}", function ($message) use ($kunjungan) {
-                $message->to($kunjungan->email)->subject('Invoice & QR Kunjungan Museum');
-            });
+            Mail::to($kunjungan->email)->send(new Invoice($kunjungan));
         } catch (\Throwable) {
             // Keep non-blocking when mail server is unavailable.
         }
 
-        // WhatsApp Notification
         try {
             FonnteService::sendInvoice($kunjungan);
         } catch (\Throwable) {

@@ -7,6 +7,7 @@ use App\Models\DisableDay;
 use App\Models\Kunjungan;
 use App\Models\Payment;
 use App\Models\Pendaftar;
+use App\Mail\Invoice;
 use App\Services\FonnteService;
 use App\Services\MidtransService;
 use App\Services\PaymentService;
@@ -197,16 +198,7 @@ class BookingController extends Controller
 
         if ($transactionStatus && $orderId && in_array($transactionStatus, ['capture', 'settlement'])) {
             if ($payment->midtrans_order_id === $orderId && $payment->status !== 'paid') {
-                DB::transaction(function () use ($payment) {
-                    $payment->update(['status' => 'paid']);
-                    $pendaftar = $payment->pendaftar;
-                    if ($pendaftar && $pendaftar->status_pengajuan !== 'approved') {
-                        $pendaftar->update(['status_pengajuan' => 'approved']);
-                    }
-                    if (! $payment->kunjungan) {
-                        $this->createKunjunganFromPayment($payment, $pendaftar);
-                    }
-                });
+                $this->paymentService->completePayment($payment);
                 return redirect()->route('booking.receipt', $payment->id_payment);
             }
         }
@@ -360,11 +352,7 @@ class BookingController extends Controller
     private function sendInvoice(Kunjungan $kunjungan): void
     {
         try {
-            $name = $kunjungan->nama ?: $kunjungan->nama_instansi ?: 'Pengunjung';
-            $receiptUrl = route('booking.receipt', $kunjungan->id_payment);
-            Mail::raw("Halo {$name}, invoice dan QR kunjungan Anda: {$receiptUrl}", function ($message) use ($kunjungan) {
-                $message->to($kunjungan->email)->subject('Invoice & QR Kunjungan Museum');
-            });
+            Mail::to($kunjungan->email)->send(new Invoice($kunjungan));
         } catch (\Throwable) {
             // Keep booking flow non-blocking when mail server is unavailable.
         }
