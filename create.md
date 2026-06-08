@@ -247,6 +247,13 @@ Staff Museum Cakranigrat
 
 Credentials stored in .env file (not committed)
 
+### update main UI 
+
+on Jam Operasional set only:
+
+Senin - Jumat: 08:00 - 16:00
 
 
+on Harga Tiket put only:
 
+semua kalangan Rp.3000 

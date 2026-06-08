@@ -63,14 +63,11 @@
     <div class="rounded-xl bg-white p-6 shadow-md">
         <h3 class="mb-2 text-xl font-semibold">Jam Operasional</h3>
         <p class="text-slate-700">Senin - Jumat: 08:00 - 16:00</p>
-        <p class="text-slate-700">Sabtu - Minggu: 09:00 - 17:00</p>
     </div>
 
     <div class="rounded-xl bg-white p-6 shadow-md">
         <h3 class="mb-2 text-xl font-semibold">Harga Tiket (referensi)</h3>
-        <p class="text-slate-700">Dewasa: Rp10.000</p>
-        <p class="text-slate-700">Anak-anak: Rp5.000</p>
-        <p class="mt-2 text-xs text-slate-500">Total di halaman pembayaran mengikuti jumlah pengunjung.</p>
+        <p class="text-slate-700">semua kalangan Rp.3000</p>
     </div>
 </div>
 @endsection
