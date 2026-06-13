@@ -38,6 +38,7 @@ return [
     'fonnte' => [
         'token' => env('FONNTE_TOKEN'),
         'number' => env('FONNTE_NUMBER'),
+        'wa_group' => env('WA_GROUP_ID'),
     ],
 
     'midtrans' => [

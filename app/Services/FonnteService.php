@@ -7,6 +7,7 @@ use App\Models\Payment;
 use App\Models\Pendaftar;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class FonnteService
 {
@@ -86,6 +87,46 @@ class FonnteService
             'target' => $pendaftar->no_wa,
             'message' => $message,
         ]);
+    }
+
+    public static function sendPendaftaranNotif(Pendaftar $pendaftar, Payment $payment): void
+    {
+        $groupTarget = config('services.fonnte.wa_group');
+        if (! $groupTarget) {
+            return;
+        }
+
+        $name = $pendaftar->nama ?: $pendaftar->nama_instansi ?: 'Pengunjung';
+        $tanggal = Carbon::parse($pendaftar->tanggal_kunjungan)->locale('id')->translatedFormat('d F Y');
+
+        $message = "NOTIFIKASI PENDAFTAR!!!\n\n";
+        $message .= "Informasi Pengajuan:\n\n";
+        $message .= "ID Pengajuan: {$pendaftar->id_pendaftar}\n";
+        $message .= "Nama pendaftar: {$name}\n";
+        $message .= "Tanggal kunjungan: {$tanggal}\n";
+        $message .= "Jenis Layanan: " . ucfirst($pendaftar->jenis_pendaftar) . "\n";
+        $message .= "Status: {$pendaftar->status_pengajuan}\n";
+        $message .= "jenis pembayaran: {$payment->payment_method}\n\n";
+        $message .= "silahkan check di halaman admin\n";
+        $message .= "https://visitcakraningrat.ilylearn.my.id/login";
+
+        try {
+            $response = Http::withHeaders([
+                'Authorization' => config('services.fonnte.token'),
+            ])->post('https://api.fonnte.com/send', [
+                'target' => $groupTarget,
+                'message' => $message,
+            ]);
+
+            if ($response->failed()) {
+                Log::warning('Fonnte sendPendaftaranNotif failed', [
+                    'status' => $response->status(),
+                    'body' => $response->body(),
+                ]);
+            }
+        } catch (\Throwable $e) {
+            Log::error('Fonnte sendPendaftaranNotif exception: ' . $e->getMessage());
+        }
     }
 
     public static function sendInvoice(Kunjungan $kunjungan): void

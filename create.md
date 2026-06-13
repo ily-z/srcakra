@@ -257,3 +257,21 @@ Senin - Jumat: 08:00 - 16:00
 on Harga Tiket put only:
 
 semua kalangan Rp.3000 
+
+
+### notif pendatar
+after button mengajukan cliked, send to WA group (on .env), not to email, sending something like this:
+
+NOTIFIKASI PENDAFTAR!!!
+
+Informasi Pengajuan:
+
+ID Pengajuan: [ID_PENGAJUAN]
+Nama pendaftar: [nama]
+Tanggal kunjungan: [TANGGAL]
+Jenis Layanan: [JENIS_LAYANAN]
+Status: [status]
+jenis pembayaran: [cash/online]
+
+silahkan check di halaman admin
+https://visitcakraningrat.ilylearn.my.id/login

@@ -187,6 +187,8 @@ class BookingController extends Controller
 
         [$pendaftar, $payment] = $result;
 
+        FonnteService::sendPendaftaranNotif($pendaftar, $payment);
+
         return redirect()->route('booking.payment', $payment->id_payment)
             ->with('success', 'Pengajuan berhasil dikirim.');
     }
