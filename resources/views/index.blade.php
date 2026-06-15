@@ -43,7 +43,7 @@
 <div class="animate-in fade-in slide-in-from-bottom duration-700 delay-300 mb-8 rounded-xl bg-amber-50/80 p-5 text-left shadow-md ring-1 ring-amber-200/60">
     <h2 class="mb-2 text-lg font-semibold text-[#5C4033]">Alur pengunjung</h2>
     <ol class="list-decimal space-y-2 pl-5 text-sm text-slate-700">
-        <li>Isi form (personal atau instansi) dan pilih <span class="font-medium">Cash</span> atau <span class="font-medium">pembayaran online</span> (Midtrans / e-wallet).</li>
+        <li>Isi form (personal atau instansi) dan pilih <span class="font-medium">Cash</span> atau <span class="font-medium">QRIS</span> (scan & bayar).</li>
         <li>Untuk instansi, pengajuan dapat <span class="font-medium">disetujui atau ditolak</span> oleh admin; jika disetujui, lanjut ke instruksi pembayaran.</li>
         <li>Setelah pembayaran diverifikasi, unduh <span class="font-medium">kwitansi + QR</span> dan dapat dikirim ke email atau WhatsApp.</li>
     </ol>

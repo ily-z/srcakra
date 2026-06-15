@@ -51,22 +51,15 @@
                                 Kami akan menginformasikan perkembangan selanjutnya melalui email ini.
                             </p>
 
-                            @if ($paymentUrl)
+                            @if ($payment->payment_method === 'qris')
                                 <p style="font-size:14px;color:#555;line-height:1.6">
-                                    Silakan lakukan pembayaran secara online pada tautan berikut:
+                                    Untuk metode pembayaran QRIS, silakan lakukan pembayaran dengan scan QRIS
+                                    pada halaman pembayaran. Setelah pembayaran, admin akan memverifikasi secara manual.
                                 </p>
                                 <p style="margin:16px 0;text-align:center">
-                                    <a href="{{ $paymentUrl }}" style="display:inline-block;background-color:#5C4033;color:#ffffff;padding:12px 28px;border-radius:6px;font-size:14px;font-weight:bold;text-decoration:none">
-                                        Bayar Sekarang
+                                    <a href="{{ route('booking.payment', $payment->id_payment) }}" style="display:inline-block;background-color:#5C4033;color:#ffffff;padding:12px 28px;border-radius:6px;font-size:14px;font-weight:bold;text-decoration:none">
+                                        Lihat Halaman Pembayaran
                                     </a>
-                                </p>
-                                <p style="font-size:12px;color:#888;line-height:1.6">
-                                    Atau salin tautan berikut ke browser: {{ $paymentUrl }}
-                                </p>
-                            @elseif ($payment->payment_method !== 'cash')
-                                <p style="font-size:14px;color:#555;line-height:1.6">
-                                    Untuk metode pembayaran online, Anda akan menerima email lanjutan
-                                    dengan instruksi pembayaran setelah pengajuan Anda disetujui oleh admin.
                                 </p>
                             @endif
 

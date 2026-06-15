@@ -176,20 +176,20 @@
 
             <div class="rounded-xl border border-slate-200 bg-slate-50/90 p-3 sm:p-4">
                 <span class="mb-2 sm:mb-3 block text-xs sm:text-sm font-medium text-slate-800">Metode pembayaran</span>
-                <p class="mb-3 text-xs text-slate-600">Pilih <span class="font-medium">Cash</span> (bayar di tempat) atau <span class="font-medium">Online</span> (e-wallet, bank transfer, QRIS).</p>
+                <p class="mb-3 text-xs text-slate-600">Pilih <span class="font-medium">Cash</span> (bayar di tempat) atau <span class="font-medium">QRIS</span> (scan & bayar).</p>
 
                 <div class="relative mb-3 grid grid-cols-2 rounded-xl bg-white p-1 ring-1 ring-slate-200" role="group">
                     <div id="paySlider" class="absolute inset-y-1 left-1 w-[calc(50%-6px)] rounded-lg bg-[#5C4033] shadow-sm transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]"></div>
                     <button type="button" id="payCashBtn" class="relative flex-1 rounded-lg px-3 py-2.5 sm:py-2 text-xs sm:text-sm font-semibold transition z-10 text-white">
                         Cash
                     </button>
-                    <button type="button" id="payMidtransBtn" class="relative flex-1 rounded-lg px-3 py-2.5 sm:py-2 text-xs sm:text-sm font-semibold transition z-10 text-slate-700">
-                        Online (Midtrans)
+                    <button type="button" id="payQrisBtn" class="relative flex-1 rounded-lg px-3 py-2.5 sm:py-2 text-xs sm:text-sm font-semibold transition z-10 text-slate-700">
+                        QRIS
                     </button>
                 </div>
 
-                <div id="midtransDesc" class="hidden rounded-lg bg-sky-50 p-3 text-[10px] sm:text-xs text-sky-950">
-                    Pembayaran via Midtrans: Tersedia e-wallet (DANA, OVO, GoPay, ShopeePay, LinkAja), QRIS, bank transfer, dan retail outlet.
+                <div id="qrisDesc" class="hidden rounded-lg bg-sky-50 p-3 text-[10px] sm:text-xs text-sky-950">
+                    Pembayaran via QRIS: Scan QRIS menggunakan aplikasi e-wallet (DANA, OVO, GoPay, ShopeePay, LinkAja) atau mobile banking.
                 </div>
 
                 <input type="hidden" name="payment_method" id="payment_method" value="{{ old('payment_method', 'cash') }}" />
@@ -254,8 +254,8 @@
     const instansiFields = document.getElementById('instansiFields');
     const tanggalInput = document.getElementById('tanggal_kunjungan');
     const payCashBtn = document.getElementById('payCashBtn');
-    const payMidtransBtn = document.getElementById('payMidtransBtn');
-    const midtransDesc = document.getElementById('midtransDesc');
+    const payQrisBtn = document.getElementById('payQrisBtn');
+    const qrisDesc = document.getElementById('qrisDesc');
     const paymentMethodInput = document.getElementById('payment_method');
 
     const baseTabClass = 'relative flex-1 rounded-lg px-3 py-2.5 sm:py-2 text-xs sm:text-sm font-semibold transition z-10';
@@ -285,27 +285,27 @@
     const paySlider = document.getElementById('paySlider');
 
     function setPaymentUI(mode) {
-        midtransDesc.classList.add('hidden');
+        qrisDesc.classList.add('hidden');
 
         if (mode === 'cash') {
             paySlider.style.left = '4px';
             payCashBtn.className = basePayClass + ' text-white';
-            payMidtransBtn.className = basePayClass + ' text-slate-700';
+            payQrisBtn.className = basePayClass + ' text-slate-700';
             paymentMethodInput.value = 'cash';
         } else {
             paySlider.style.left = 'calc(50% + 2px)';
             payCashBtn.className = basePayClass + ' text-slate-700';
-            payMidtransBtn.className = basePayClass + ' text-white';
-            midtransDesc.classList.remove('hidden');
-            paymentMethodInput.value = 'midtrans';
+            payQrisBtn.className = basePayClass + ' text-white';
+            qrisDesc.classList.remove('hidden');
+            paymentMethodInput.value = 'qris';
         }
     }
 
     payCashBtn.addEventListener('click', () => setPaymentUI('cash'));
-    payMidtransBtn.addEventListener('click', () => setPaymentUI('midtrans'));
+    payQrisBtn.addEventListener('click', () => setPaymentUI('qris'));
 
     const oldPm = @json(old('payment_method', 'cash'));
-    setPaymentUI(oldPm === 'midtrans' ? 'midtrans' : 'cash');
+    setPaymentUI(oldPm === 'qris' ? 'qris' : 'cash');
 
     tanggalInput.addEventListener('change', function () {
         if (disabledDates.includes(this.value)) {

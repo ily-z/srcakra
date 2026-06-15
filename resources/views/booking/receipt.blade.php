@@ -68,7 +68,7 @@
                 onclick="window.print()"
                 class="inline-flex items-center justify-center rounded-xl bg-[#5C4033] px-6 py-3 text-center text-sm font-bold text-white shadow-sm transition hover:bg-[#4a3329]"
             >
-                cetak Kirim kwitansi &amp; QR
+                cetak kwitansi &amp; QR Code
             </button>
         </div>
     </div>

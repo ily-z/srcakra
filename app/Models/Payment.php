@@ -17,9 +17,6 @@ class Payment extends Model
         'payment_method',
         'status',
         'total',
-        'midtrans_transaction_id',
-        'midtrans_redirect_url',
-        'midtrans_order_id',
     ];
 
     public function getRouteKeyName(): string

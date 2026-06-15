@@ -44,7 +44,7 @@
                 <span class="font-medium">Cash:</span> pembayaran di lokasi / verifikasi admin sesuai kebijakan museum; setelah status lunas, kwitansi &amp; QR dapat dibuka.
             </li>
             <li>
-                <span class="font-medium">Online:</span> dilanjutkan lewat <span class="font-medium">Midtrans</span> (e-wallet, bank transfer, QRIS, retail outlet). Setelah pembayaran dikonfirmasi, unduh kwitansi + QR; Anda juga dapat meminta admin mengirim tagihan atau konfirmasi jika diperlukan.
+                <span class="font-medium">QRIS:</span> scan QRIS di halaman ini, lakukan pembayaran, lalu tunggu konfirmasi admin. Setelah lunas, unduh kwitansi + QR.
             </li>
             <li>
                 <span class="font-medium">Instansi:</span> pengajuan dapat <span class="font-medium">disetujui atau ditolak</span> oleh admin sebelum pembayaran final diproses.
@@ -70,44 +70,14 @@
             <p class="font-semibold">Menunggu pembayaran tunai / konfirmasi</p>
             <p class="mt-1 text-amber-900/90">Silakan datang sesuai jadwal atau tunggu <span class="font-medium">request / instruksi pembayaran</span> dari admin jika diperlukan.</p>
         </div>
-    @elseif ($payment->payment_method === 'midtrans')
+    @elseif ($payment->payment_method === 'qris')
         <div class="mb-5 rounded-xl border border-sky-200 bg-sky-50 p-4 text-sm text-sky-950">
-            <p class="font-semibold">Pembayaran online (Midtrans)</p>
-            <p class="mt-1">Link pembayaran telah dikirim ke email dan WhatsApp Anda. Klik tombol di bawah jika ingin membayar sekarang.</p>
+            <p class="font-semibold">Pembayaran via QRIS</p>
+            <p class="mt-1">Scan QRIS di bawah menggunakan aplikasi e-wallet atau mobile banking. Setelah pembayaran, kirim bukti ke Whatsapp museum ,admin akan memverifikasi secara manual.</p>
         </div>
-        @if ($payment->midtrans_redirect_url)
-            <a
-                href="{{ $payment->midtrans_redirect_url }}"
-                class="inline-flex w-full items-center justify-center rounded-xl bg-sky-600 px-5 py-3.5 font-bold text-white shadow-md transition hover:bg-sky-700"
-                target="_blank"
-            >
-                Lanjutkan pembayaran
-            </a>
-        @else
-            <a
-                href="{{ route('booking.midtrans.pay', $payment->id_payment) }}"
-                class="inline-flex w-full items-center justify-center rounded-xl bg-sky-600 px-5 py-3.5 font-bold text-white shadow-md transition hover:bg-sky-700"
-            >
-                Bayar dengan Midtrans
-            </a>
-        @endif
-        <form method="POST" action="{{ route('booking.payment.simulate', $payment->id_payment) }}" class="mt-3">
-            @csrf
-            <button type="submit" class="w-full rounded-xl border border-slate-300 bg-white py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50">
-                Simulasikan pembayaran berhasil (testing)
-            </button>
-        </form>
-    @elseif ($payment->payment_method !== 'cash' && $payment->status !== 'paid')
-        <div class="mb-5 rounded-xl border border-sky-200 bg-sky-50 p-4 text-sm text-sky-950">
-            <p class="font-semibold">Pembayaran online</p>
-            <p class="mt-1">Silakan hubungi admin untuk informasi pembayaran lebih lanjut.</p>
+        <div class="mb-5 flex justify-center">
+            <img src="{{ asset('image/qrisimage/disbudpar_Qris.png') }}" alt="QRIS" class="max-w-xs rounded-xl border border-slate-200 bg-white p-2 shadow-sm">
         </div>
-        <form method="POST" action="{{ route('booking.payment.simulate', $payment->id_payment) }}" class="space-y-3">
-            @csrf
-            <button type="submit" class="w-full rounded-xl bg-sky-600 py-3.5 font-bold text-white shadow-md transition hover:bg-sky-700">
-                Simulasikan pembayaran berhasil
-            </button>
-        </form>
     @endif
 
     <p class="mt-8 text-center text-xs text-slate-500">

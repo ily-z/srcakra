@@ -3,7 +3,6 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\DisableDayController;
-use App\Http\Controllers\MidtransController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -11,11 +10,7 @@ Route::get('/', [BookingController::class, 'home'])->name('home');
 Route::get('/booking', [BookingController::class, 'index'])->name('booking.index');
 Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
 Route::get('/booking/payment/{payment}', [BookingController::class, 'payment'])->name('booking.payment');
-Route::get('/booking/payment/{payment}/midtrans', [BookingController::class, 'payViaMidtrans'])->name('booking.midtrans.pay');
-Route::post('/booking/payment/{payment}/simulate-paid', [BookingController::class, 'midtransCallbackSimulation'])->name('booking.payment.simulate');
 Route::get('/booking/receipt/{payment}', [BookingController::class, 'receipt'])->name('booking.receipt');
-
-Route::post('/midtrans/callback', [MidtransController::class, 'callback'])->name('midtrans.callback');
 
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
     Route::redirect('/', '/admin/analytics');
