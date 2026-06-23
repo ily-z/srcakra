@@ -26,7 +26,9 @@ export default function VerifyEmail({ status }: { status?: string }) {
             title="Verify email"
             description="Please verify your email address by clicking on the link we just emailed to you."
         >
-            <Head title="Email verification" />
+            <Head title="Email verification">
+    <meta name="robots" content="noindex, nofollow" />
+</Head>
 
             <motion.div
                 variants={container}

@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title', 'Kwitansi & QR - Museum Cakraningrat')
+@section('noindex', 'noindex, nofollow')
+@section('canonical', url()->current())
+
 @section('content')
 <style>
     @media print {

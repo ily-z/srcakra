@@ -55,7 +55,9 @@ export default function TwoFactor({
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Two-factor authentication" />
+            <Head title="Two-factor authentication">
+    <meta name="robots" content="noindex, nofollow" />
+</Head>
 
             <h1 className="sr-only">Two-factor authentication settings</h1>
 

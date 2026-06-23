@@ -5,6 +5,10 @@
     $statusPengajuan = $pendaftar?->status_pengajuan;
 @endphp
 
+@section('title', 'Status Pengajuan & Pembayaran - Museum Cakraningrat')
+@section('noindex', 'noindex, nofollow')
+@section('canonical', route('booking.payment', $payment->id_payment))
+
 @section('content')
 <div class="mx-auto max-w-2xl">
     <div class="mb-6">

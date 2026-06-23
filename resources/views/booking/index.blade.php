@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
+@section('title', 'Pendaftaran Kunjungan - Museum Cakraningrat')
+@section('metaDescription', 'Daftar kunjungan ke Museum Cakraningrat Bangkalan. Isi data diri, pilih tanggal, dan ajukan kunjungan personal atau instansi.')
+@section('ogTitle', 'Pendaftaran Kunjungan - Museum Cakraningrat')
+@section('ogDescription', 'Daftar kunjungan ke Museum Cakraningrat Bangkalan. Isi data diri, pilih tanggal, dan ajukan kunjungan personal atau instansi.')
+@section('canonical', route('booking.index'))
+
 @push('background')
     @include('partials.bubble-background')
 @endpush

@@ -63,7 +63,9 @@ export default function TwoFactorChallenge() {
             title={authConfigContent.title}
             description={authConfigContent.description}
         >
-            <Head title="Two-factor authentication" />
+            <Head title="Two-factor authentication">
+    <meta name="robots" content="noindex, nofollow" />
+</Head>
 
             <motion.div
                 variants={container}

@@ -3,9 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Museum Cakraningrat</title>
+
+    <title>@yield('title', 'Museum Cakraningrat')</title>
+    <meta name="description" content="@yield('metaDescription', \App\Services\SEOService::defaultDescription())">
+
+    <meta property="og:title" content="@yield('ogTitle', 'Museum Cakraningrat')" />
+    <meta property="og:description" content="@yield('ogDescription', \App\Services\SEOService::defaultDescription())" />
+    <meta property="og:url" content="@yield('canonical', url()->current())" />
+    <meta property="og:image" content="@yield('ogImage', \App\Services\SEOService::defaultImage())" />
+    <meta property="og:type" content="@yield('ogType', 'website')" />
+    <meta property="og:site_name" content="{{ config('app.name', 'Museum Cakraningrat') }}" />
+    <meta property="og:locale" content="id_ID" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="@yield('ogTitle', 'Museum Cakraningrat')" />
+    <meta name="twitter:description" content="@yield('ogDescription', \App\Services\SEOService::defaultDescription())" />
+    <meta name="twitter:image" content="@yield('ogImage', \App\Services\SEOService::defaultImage())" />
+
+    <link rel="canonical" href="@yield('canonical', url()->current())" />
+    @hasSection('noindex')
+        <meta name="robots" content="@yield('noindex')" />
+    @endif
+
     <link rel="icon" type="image/png" href="{{ asset('image/logo/logomuseum icon.png') }}">
     @vite('resources/css/app.css')
+
+    {!! \App\Services\SEOService::renderSchema(\App\Services\SEOService::organizationSchema()) !!}
+    {!! \App\Services\SEOService::renderSchema(\App\Services\SEOService::websiteSchema()) !!}
 </head>
 <body class="min-h-screen bg-[#F5F5DC] text-slate-800">
     @stack('background')

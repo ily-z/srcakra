@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Museum</title>
+    <title>@yield('title', 'Admin Museum Cakraningrat')</title>
+    <meta name="robots" content="noindex, nofollow">
     <link rel="icon" type="image/png" href="{{ asset('image/logo/logomuseum icon.png') }}">
     @vite('resources/css/app.css')
 </head>

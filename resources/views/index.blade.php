@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
+@section('title', 'Museum Cakraningrat - Wisata Sejarah & Budaya Bangkalan')
+@section('metaDescription', 'Kunjungi Museum Cakraningrat di Bangkalan. Jelajahi koleksi bersejarah, budaya Madura, dan pesona sejarah Bangkalan. Tiket mulai Rp3.000.')
+@section('ogTitle', 'Museum Cakraningrat - Wisata Sejarah & Budaya Bangkalan')
+@section('ogDescription', 'Kunjungi Museum Cakraningrat di Bangkalan. Jelajahi koleksi bersejarah, budaya Madura, dan pesona sejarah Bangkalan. Tiket mulai Rp3.000.')
+@section('canonical', route('home'))
+
 @push('background')
     @include('partials.bubble-background')
 @endpush

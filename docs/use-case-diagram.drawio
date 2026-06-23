@@ -1,0 +1,261 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0" version="24.7.7">
+  <diagram id="use-case-diagram" name="Use Case Diagram">
+    <mxGraphModel dx="0" dy="0" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1160" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- System Boundary -->
+        <mxCell id="2" value="Sistem Museum Cakraningrat - Visit Booking &amp; Management" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;dashPattern=8 4;fillColor=none;strokeColor=#333333;fontStyle=1;fontSize=14;fontColor=#333333;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="170" y="40" width="540" height="1080" as="geometry" />
+        </mxCell>
+
+        <!-- ============ ACTORS ============ -->
+        <!-- Visitor -->
+        <mxCell id="10" value="Visitor&#xa;(Pengunjung)" style="shape=umlActor;whiteSpace=wrap;html=1;fontSize=12;fontColor=#1A1A2E;fillColor=#E3F2FD;strokeColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="50" y="180" width="80" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Institution Rep -->
+        <mxCell id="11" value="Institution&#xa;Rep" style="shape=umlActor;whiteSpace=wrap;html=1;fontSize=12;fontColor=#1A1A2E;fillColor=#FFF3E0;strokeColor=#E65100;" vertex="1" parent="1">
+          <mxGeometry x="50" y="420" width="80" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Admin Staff -->
+        <mxCell id="12" value="Admin Staff&#xa;(Petugas)" style="shape=umlActor;whiteSpace=wrap;html=1;fontSize=12;fontColor=#1A1A2E;fillColor=#F3E5F5;strokeColor=#7B1FA2;" vertex="1" parent="1">
+          <mxGeometry x="50" y="700" width="80" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- ============ USE CASES - LEFT COLUMN ============ -->
+        <!-- UC1: View Calendar -->
+        <mxCell id="20" value="Melihat Kalender&#xa;Kunjungan" style="ellipse;whiteSpace=wrap;html=1;align=center;fontSize=11;fillColor=#E8F5E9;strokeColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="220" y="80" width="170" height="48" as="geometry" />
+        </mxCell>
+
+        <!-- UC2: Book Personal -->
+        <mxCell id="21" value="Mendaftar Kunjungan&#xa;(Personal)" style="ellipse;whiteSpace=wrap;html=1;align=center;fontSize=11;fillColor=#E8F5E9;strokeColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="220" y="180" width="170" height="48" as="geometry" />
+        </mxCell>
+
+        <!-- UC3: Book Institution -->
+        <mxCell id="22" value="Mendaftar Kunjungan&#xa;(Instansi)" style="ellipse;whiteSpace=wrap;html=1;align=center;fontSize=11;fillColor=#E8F5E9;strokeColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="220" y="280" width="170" height="48" as="geometry" />
+        </mxCell>
+
+        <!-- UC4: Upload Letter -->
+        <mxCell id="23" value="Upload Surat&#xa;Pengajuan" style="ellipse;whiteSpace=wrap;html=1;align=center;fontSize=11;fillColor=#E8F5E9;strokeColor=#2E7D32;" vertex="1" parent="1">
+          <geometry x="220" y="380" width="170" height="48" as="geometry" />
+        </mxCell>
+
+        <!-- UC5: View Payment Status -->
+        <mxCell id="24" value="Lihat Status&#xa;Pembayaran" style="ellipse;whiteSpace=wrap;html=1;align=center;fontSize=11;fillColor=#E8F5E9;strokeColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="220" y="480" width="170" height="48" as="geometry" />
+        </mxCell>
+
+        <!-- UC6: View Receipt & QR -->
+        <mxCell id="25" value="Lihat Tanda Terima&#xa;&amp; QR Code" style="ellipse;whiteSpace=wrap;html=1;align=center;fontSize=11;fillColor=#E8F5E9;strokeColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="220" y="580" width="170" height="48" as="geometry" />
+        </mxCell>
+
+        <!-- UC7: Login -->
+        <mxCell id="26" value="Login /&#xa;Autentikasi" style="ellipse;whiteSpace=wrap;html=1;align=center;fontSize=11;fillColor=#E8F5E9;strokeColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="220" y="680" width="170" height="48" as="geometry" />
+        </mxCell>
+
+        <!-- ============ USE CASES - RIGHT COLUMN ============ -->
+        <!-- UC8: Approve/Reject -->
+        <mxCell id="30" value="Approve / Reject&#xa;Pendaftaran" style="ellipse;whiteSpace=wrap;html=1;align=center;fontSize=11;fillColor=#E3F2FD;strokeColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="460" y="130" width="190" height="48" as="geometry" />
+        </mxCell>
+
+        <!-- UC9: Process Payment -->
+        <mxCell id="31" value="Proses Pembayaran&#xa;(Set Paid)" style="ellipse;whiteSpace=wrap;html=1;align=center;fontSize=11;fillColor=#E3F2FD;strokeColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="460" y="230" width="190" height="48" as="geometry" />
+        </mxCell>
+
+        <!-- UC10: Request Payment -->
+        <mxCell id="32" value="Minta Pembayaran&#xa;ke Visitor" style="ellipse;whiteSpace=wrap;html=1;align=center;fontSize=11;fillColor=#E3F2FD;strokeColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="460" y="330" width="190" height="48" as="geometry" />
+        </mxCell>
+
+        <!-- UC11: Scan QR -->
+        <mxCell id="33" value="Scan QR&#xa;Check-in" style="ellipse;whiteSpace=wrap;html=1;align=center;fontSize=11;fillColor=#E3F2FD;strokeColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="460" y="430" width="190" height="48" as="geometry" />
+        </mxCell>
+
+        <!-- UC12: Dashboard Analytics -->
+        <mxCell id="34" value="Dashboard&#xa;Analytics" style="ellipse;whiteSpace=wrap;html=1;align=center;fontSize=11;fillColor=#E3F2FD;strokeColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="460" y="530" width="190" height="48" as="geometry" />
+        </mxCell>
+
+        <!-- UC13: Visit History -->
+        <mxCell id="35" value="Riwayat&#xa;Kunjungan" style="ellipse;whiteSpace=wrap;html=1;align=center;fontSize=11;fillColor=#E3F2FD;strokeColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="460" y="630" width="190" height="48" as="geometry" />
+        </mxCell>
+
+        <!-- UC14: Manage Disable Days -->
+        <mxCell id="36" value="Kelola&#xa;Hari Libur" style="ellipse;whiteSpace=wrap;html=1;align=center;fontSize=11;fillColor=#E3F2FD;strokeColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="460" y="730" width="190" height="48" as="geometry" />
+        </mxCell>
+
+        <!-- UC15: Manage Users -->
+        <mxCell id="37" value="Kelola Akun&#xa;Admin" style="ellipse;whiteSpace=wrap;html=1;align=center;fontSize=11;fillColor=#E3F2FD;strokeColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="460" y="830" width="190" height="48" as="geometry" />
+        </mxCell>
+
+        <!-- UC16: Settings -->
+        <mxCell id="38" value="Kelola Profil&#xa;/ Settings" style="ellipse;whiteSpace=wrap;html=1;align=center;fontSize=11;fillColor=#E3F2FD;strokeColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="460" y="930" width="190" height="48" as="geometry" />
+        </mxCell>
+
+        <!-- ============ EXTERNAL SYSTEMS ============ -->
+        <mxCell id="50" value="&lt;b&gt;Fonnte API&lt;/b&gt;&#xa;(WhatsApp)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE4EC;strokeColor=#C62828;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="740" y="160" width="110" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="51" value="&lt;b&gt;Gmail SMTP&lt;/b&gt;&#xa;(Email)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE4EC;strokeColor=#C62828;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="740" y="300" width="110" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="52" value="&lt;b&gt;QR Server API&lt;/b&gt;&#xa;(QR Code)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE4EC;strokeColor=#C62828;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="740" y="440" width="110" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ============ EDGES: ACTOR → USE CASE ============ -->
+
+        <!-- Visitor → UC1 (View Calendar) -->
+        <mxCell id="e10-20" style="edgeStyle=segmentEdgeStyle;html=1;rounded=0;endArrow=none;entryX=0.5;entryY=0;exitX=1;exitY=0.5;strokeColor=#1565C0;" edge="1" parent="1" source="10" target="20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Visitor → UC2 (Book Personal) -->
+        <mxCell id="e10-21" style="edgeStyle=segmentEdgeStyle;html=1;rounded=0;endArrow=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#1565C0;" edge="1" parent="1" source="10" target="21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Visitor → UC5 (Payment Status) -->
+        <mxCell id="e10-24" style="edgeStyle=segmentEdgeStyle;html=1;rounded=0;endArrow=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#1565C0;" edge="1" parent="1" source="10" target="24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Visitor → UC6 (Receipt & QR) -->
+        <mxCell id="e10-25" style="edgeStyle=segmentEdgeStyle;html=1;rounded=0;endArrow=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#1565C0;" edge="1" parent="1" source="10" target="25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Institution Rep → UC3 (Book Instansi) -->
+        <mxCell id="e11-22" style="edgeStyle=segmentEdgeStyle;html=1;rounded=0;endArrow=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#E65100;" edge="1" parent="1" source="11" target="22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Institution Rep → UC4 (Upload Letter) -->
+        <mxCell id="e11-23" style="edgeStyle=segmentEdgeStyle;html=1;rounded=0;endArrow=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#E65100;" edge="1" parent="1" source="11" target="23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Institution Rep → UC5 (Payment Status) -->
+        <mxCell id="e11-24" style="edgeStyle=segmentEdgeStyle;html=1;rounded=0;endArrow=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#E65100;" edge="1" parent="1" source="11" target="24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Institution Rep → UC6 (Receipt & QR) -->
+        <mxCell id="e11-25" style="edgeStyle=segmentEdgeStyle;html=1;rounded=0;endArrow=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#E65100;" edge="1" parent="1" source="11" target="25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Admin → UC7 (Login) -->
+        <mxCell id="e12-26" style="edgeStyle=segmentEdgeStyle;html=1;rounded=0;endArrow=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#7B1FA2;" edge="1" parent="1" source="12" target="26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Admin → UC8 (Approve/Reject) -->
+        <mxCell id="e12-30" style="edgeStyle=segmentEdgeStyle;html=1;rounded=0;endArrow=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#7B1FA2;" edge="1" parent="1" source="12" target="30">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Admin → UC9 (Process Payment) -->
+        <mxCell id="e12-31" style="edgeStyle=segmentEdgeStyle;html=1;rounded=0;endArrow=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#7B1FA2;" edge="1" parent="1" source="12" target="31">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Admin → UC10 (Request Payment) -->
+        <mxCell id="e12-32" style="edgeStyle=segmentEdgeStyle;html=1;rounded=0;endArrow=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#7B1FA2;" edge="1" parent="1" source="12" target="32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Admin → UC11 (Scan QR) -->
+        <mxCell id="e12-33" style="edgeStyle=segmentEdgeStyle;html=1;rounded=0;endArrow=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#7B1FA2;" edge="1" parent="1" source="12" target="33">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Admin → UC12 (Analytics) -->
+        <mxCell id="e12-34" style="edgeStyle=segmentEdgeStyle;html=1;rounded=0;endArrow=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#7B1FA2;" edge="1" parent="1" source="12" target="34">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Admin → UC13 (History) -->
+        <mxCell id="e12-35" style="edgeStyle=segmentEdgeStyle;html=1;rounded=0;endArrow=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#7B1FA2;" edge="1" parent="1" source="12" target="35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Admin → UC14 (Disable Days) -->
+        <mxCell id="e12-36" style="edgeStyle=segmentEdgeStyle;html=1;rounded=0;endArrow=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#7B1FA2;" edge="1" parent="1" source="12" target="36">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Admin → UC15 (Manage Users) -->
+        <mxCell id="e12-37" style="edgeStyle=segmentEdgeStyle;html=1;rounded=0;endArrow=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#7B1FA2;" edge="1" parent="1" source="12" target="37">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Admin → UC16 (Settings) -->
+        <mxCell id="e12-38" style="edgeStyle=segmentEdgeStyle;html=1;rounded=0;endArrow=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#7B1FA2;" edge="1" parent="1" source="12" target="38">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ============ INCLUDE / EXTEND RELATIONSHIPS ============ -->
+
+        <!-- «include» UC3 (Book Instansi) → UC4 (Upload Letter) -->
+        <mxCell id="e22-23" value="«include»" style="edgeStyle=segmentEdgeStyle;html=1;rounded=0;endArrow=open;dashed=1;fontSize=10;labelBackgroundColor=#FFFFFF;strokeColor=#2E7D32;" edge="1" parent="1" source="22" target="23">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="305" y="320" as="sourcePoint" />
+            <mxPoint x="305" y="380" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ============ EDGES: USE CASE → EXTERNAL SYSTEM ============ -->
+
+        <!-- UC8 (Approve/Reject) → Fonnte -->
+        <mxCell id="e30-50" value="WA notif" style="edgeStyle=segmentEdgeStyle;html=1;rounded=0;endArrow=none;dashed=1;fontSize=9;labelBackgroundColor=#FFFFFF;strokeColor=#C62828;" edge="1" parent="1" source="30" target="50">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- UC9 (Process Payment) → Fonnte -->
+        <mxCell id="e31-50" value="WA invoice" style="edgeStyle=segmentEdgeStyle;html=1;rounded=0;endArrow=none;dashed=1;fontSize=9;labelBackgroundColor=#FFFFFF;strokeColor=#C62828;" edge="1" parent="1" source="31" target="50">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- UC8 (Approve/Reject) → Gmail -->
+        <mxCell id="e30-51" value="Email notif" style="edgeStyle=segmentEdgeStyle;html=1;rounded=0;endArrow=none;dashed=1;fontSize=9;labelBackgroundColor=#FFFFFF;strokeColor=#C62828;" edge="1" parent="1" source="30" target="51">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- UC9 (Process Payment) → Gmail -->
+        <mxCell id="e31-51" value="Email invoice" style="edgeStyle=segmentEdgeStyle;html=1;rounded=0;endArrow=none;dashed=1;fontSize=9;labelBackgroundColor=#FFFFFF;strokeColor=#C62828;" edge="1" parent="1" source="31" target="51">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- UC10 (Request Payment) → Gmail -->
+        <mxCell id="e32-51" value="Email request" style="edgeStyle=segmentEdgeStyle;html=1;rounded=0;endArrow=none;dashed=1;fontSize=9;labelBackgroundColor=#FFFFFF;strokeColor=#C62828;" edge="1" parent="1" source="32" target="51">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- UC6 (Receipt & QR) → QR Server API -->
+        <mxCell id="e25-52" value="generate QR" style="edgeStyle=segmentEdgeStyle;html=1;rounded=0;endArrow=none;dashed=1;fontSize=9;labelBackgroundColor=#FFFFFF;strokeColor=#C62828;" edge="1" parent="1" source="25" target="52">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

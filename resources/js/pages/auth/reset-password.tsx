@@ -31,7 +31,9 @@ export default function ResetPassword({ token, email }: Props) {
             title="Reset password"
             description="Please enter your new password below"
         >
-            <Head title="Reset password" />
+            <Head title="Reset password">
+    <meta name="robots" content="noindex, nofollow" />
+</Head>
 
             <motion.div
                 variants={container}

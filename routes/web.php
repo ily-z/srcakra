@@ -3,8 +3,12 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\DisableDayController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/robots.txt', [SitemapController::class, 'robots']);
+Route::get('/sitemap.xml', [SitemapController::class, 'sitemap']);
 
 Route::get('/', [BookingController::class, 'home'])->name('home');
 Route::get('/booking', [BookingController::class, 'index'])->name('booking.index');

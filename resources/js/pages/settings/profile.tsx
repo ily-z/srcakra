@@ -44,7 +44,9 @@ export default function Profile({
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Profile settings" />
+            <Head title="Profile settings">
+    <meta name="robots" content="noindex, nofollow" />
+</Head>
 
             <h1 className="sr-only">Profile settings</h1>
 

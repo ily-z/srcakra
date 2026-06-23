@@ -29,7 +29,9 @@ const item = {
 export default function Appearance() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Appearance settings" />
+            <Head title="Appearance settings">
+    <meta name="robots" content="noindex, nofollow" />
+</Head>
 
             <h1 className="sr-only">Appearance settings</h1>
 

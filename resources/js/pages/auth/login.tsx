@@ -48,7 +48,9 @@ export default function Login({
             title="Log in to your account"
             description="Enter your username and password below to log in"
         >
-            <Head title="Log in" />
+            <Head title="Log in">
+    <meta name="robots" content="noindex, nofollow" />
+</Head>
 
             <motion.div
                 variants={container}

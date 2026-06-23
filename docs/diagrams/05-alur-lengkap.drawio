@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="draw.io" type="device">
+  <diagram name="05 - Alur Lengkap Pengunjung (End-to-End)">
+    <mxGraphModel dx="0" dy="0" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Visitor Lane -->
+        <mxCell id="2" value="Visitor" style="swimlane;swimlaneFillColor=#E3F2FD;startSize=40;horizontal=1;" parent="1" vertex="1">
+          <mxGeometry x="40" y="40" width="1000" height="260" as="geometry" />
+        </mxCell>
+
+        <!-- System Lane -->
+        <mxCell id="3" value="System" style="swimlane;swimlaneFillColor=#F3E5F5;startSize=40;horizontal=1;" parent="1" vertex="1">
+          <mxGeometry x="40" y="300" width="1000" height="260" as="geometry" />
+        </mxCell>
+
+        <!-- Admin Lane -->
+        <mxCell id="4" value="Admin" style="swimlane;swimlaneFillColor=#FFF3E0;startSize=40;horizontal=1;" parent="1" vertex="1">
+          <mxGeometry x="40" y="560" width="1000" height="260" as="geometry" />
+        </mxCell>
+
+        <!-- ============ PHASE 1: Pendaftaran ============ -->
+        <!-- Phase label -->
+        <mxCell id="p1" value="Phase 1: Pendaftaran" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontStyle=1;fontSize=14;fontColor=#1565C0;" parent="1" vertex="1">
+          <mxGeometry x="40" y="10" width="200" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Visitor: Start -->
+        <mxCell id="10" value="" style="ellipse;fillColor=#000000;strokeColor=#000000;html=1;" parent="2" vertex="1">
+          <mxGeometry x="40" y="60" width="20" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Visitor: Buka form booking -->
+        <mxCell id="11" value="Buka website&#10;&amp; form booking" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1976D2;" parent="2" vertex="1">
+          <mxGeometry x="80" y="50" width="120" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Visitor: Isi data & submit -->
+        <mxCell id="12" value="Isi data &amp;&#10;submit pendaftaran" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1976D2;" parent="2" vertex="1">
+          <mxGeometry x="240" y="50" width="120" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- System: Validasi & simpan -->
+        <mxCell id="13" value="Validasi &amp;&#10;simpan pendaftaran" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7B1FA2;" parent="3" vertex="1">
+          <mxGeometry x="160" y="30" width="120" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Admin: Review pendaftaran -->
+        <mxCell id="14" value="Review&#10;pendaftaran" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#E65100;" parent="4" vertex="1">
+          <mxGeometry x="160" y="30" width="120" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- ============ PHASE 2: Approval ============ -->
+        <mxCell id="p2" value="Phase 2: Approval" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontStyle=1;fontSize=14;fontColor=#E65100;" parent="1" vertex="1">
+          <mxGeometry x="420" y="10" width="200" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Admin: Approve/Reject -->
+        <mxCell id="20" value="Approve or&#10;Reject" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#E65100;" parent="4" vertex="1">
+          <mxGeometry x="420" y="20" width="120" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- System: Update status -->
+        <mxCell id="21" value="Update status&#10;(Approved /&#10;Rejected)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7B1FA2;" parent="3" vertex="1">
+          <mxGeometry x="420" y="100" width="120" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- System: Kirim notifikasi -->
+        <mxCell id="22" value="Kirim notif&#10;(WA / Email)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7B1FA2;" parent="3" vertex="1">
+          <mxGeometry x="420" y="180" width="120" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Visitor: Terima notif -->
+        <mxCell id="23" value="Terima notif&#10;persetujuan" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1976D2;" parent="2" vertex="1">
+          <mxGeometry x="420" y="50" width="120" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- ============ PHASE 3: Payment ============ -->
+        <mxCell id="p3" value="Phase 3: Pembayaran" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontStyle=1;fontSize=14;fontColor=#7B1FA2;" parent="1" vertex="1">
+          <mxGeometry x="700" y="10" width="200" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Admin: Mark as Paid -->
+        <mxCell id="30" value="Klik &quot;Mark&#10;as Paid&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#E65100;" parent="4" vertex="1">
+          <mxGeometry x="700" y="40" width="120" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- System: Buat kunjungan -->
+        <mxCell id="31" value="Buat data&#10;kunjungan" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7B1FA2;" parent="3" vertex="1">
+          <mxGeometry x="700" y="100" width="120" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- System: Kirim invoice -->
+        <mxCell id="32" value="Kirim invoice&#10;&amp; e-tiket" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7B1FA2;" parent="3" vertex="1">
+          <mxGeometry x="700" y="180" width="120" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Visitor: Terima invoice -->
+        <mxCell id="33" value="Terima invoice&#10;&amp; e-tiket" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1976D2;" parent="2" vertex="1">
+          <mxGeometry x="700" y="50" width="120" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- ============ PHASE 4: Check-in ============ -->
+        <mxCell id="p4" value="Phase 4: Check-in" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontStyle=1;fontSize=14;fontColor=#2E7D32;" parent="1" vertex="1">
+          <mxGeometry x="40" y="830" width="200" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Visitor: Datang & tampilkan QR -->
+        <mxCell id="40" value="Datang &amp;&#10;tampilkan QR" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1976D2;" parent="2" vertex="1">
+          <mxGeometry x="880" y="50" width="100" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Admin: Scan QR -->
+        <mxCell id="41" value="Scan QR&#10;check-in" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#E65100;" parent="4" vertex="1">
+          <mxGeometry x="860" y="40" width="120" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- System: Validasi & complete -->
+        <mxCell id="42" value="Validasi token&#10;&amp; Complete" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7B1FA2;" parent="3" vertex="1">
+          <mxGeometry x="860" y="100" width="120" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- End Node -->
+        <mxCell id="43" value="" style="ellipse;fillColor=#000000;strokeColor=#000000;html=1;" parent="3" vertex="1">
+          <mxGeometry x="920" y="180" width="20" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- ============ EDGES ============ -->
+
+        <!-- Phase 1: Pendaftaran edges -->
+        <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="2" source="10" target="11" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="2" source="11" target="12" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="12" target="13" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="13" target="14" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Phase 1 → Phase 2 -->
+        <mxCell id="e14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="4" source="14" target="20" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Phase 2: Approval edges -->
+        <mxCell id="e20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="20" target="21" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="3" source="21" target="22" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="22" target="23" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Phase 2 → Phase 3 -->
+        <mxCell id="e30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="23" target="30" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e30b" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" parent="1" source="23" target="33" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Phase 3: Payment edges -->
+        <mxCell id="e31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="30" target="31" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="3" source="31" target="32" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="32" target="33" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Phase 3 → Phase 4 -->
+        <mxCell id="e40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="2" source="33" target="40" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Phase 4: Check-in edges -->
+        <mxCell id="e41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="40" target="41" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="41" target="42" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e43" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="3" source="42" target="43" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

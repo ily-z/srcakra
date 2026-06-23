@@ -1,0 +1,91 @@
+<mxfile host="65bd71144e">
+    <diagram name="Physical Data Model" id="0">
+        <mxGraphModel dx="1389" dy="1024" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="950" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="Physical Data Model (PDM) - Sirkra" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;fontColor=#1565C0;" parent="1" vertex="1">
+                    <mxGeometry x="400" y="20" width="500" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="tabel_pendaftar" style="swimlane;swimlaneFillColor=#E3F2FD;startSize=30;horizontal=1;rounded=1;arcSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="100" width="310" height="250" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="&lt;font color=&quot;#1565C0&quot;&gt;&lt;b&gt;PK&lt;/b&gt;&lt;/font&gt; id_pendaftar&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;bigint(20) AUTO_INCREMENT&lt;br&gt;jenis_pendaftar&amp;nbsp;&amp;nbsp;&amp;nbsp;enum(&#39;personal&#39;,&#39;instansi&#39;) NOT NULL&lt;br&gt;tanggal_daftar&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;date NOT NULL&lt;br&gt;tanggal_kunjungan&amp;nbsp;&amp;nbsp;date NOT NULL&lt;br&gt;nama&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;varchar(255) NULL&lt;br&gt;nama_instansi&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;varchar(255) NULL&lt;br&gt;alamat&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;text NOT NULL&lt;br&gt;email&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;varchar(255) NOT NULL&lt;br&gt;&lt;font color=&quot;#1565C0&quot;&gt;no_wa&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;varchar(20) NULL&lt;/font&gt;&lt;br&gt;tujuan_kunjungan&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;text NOT NULL&lt;br&gt;surat_pengajuan&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;varchar(255) NULL&lt;br&gt;jumlah_pengunjung&amp;nbsp;&amp;nbsp;int(11) DEFAULT 1&lt;br&gt;status_pengajuan&amp;nbsp;&amp;nbsp;&amp;nbsp;enum(&#39;pending&#39;,&#39;approved&#39;,&#39;rejected&#39;) DEFAULT &#39;pending&#39;&lt;br&gt;catatan_admin&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;varchar(255) NULL&lt;br&gt;created_at&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;timestamp NULL&lt;br&gt;updated_at&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;timestamp NULL&lt;br&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=10;fontFamily=Consolas;" parent="10" vertex="1">
+                    <mxGeometry x="10" y="35" width="290" height="220" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" value="tabel_payment" style="swimlane;swimlaneFillColor=#FFF3E0;startSize=30;horizontal=1;rounded=1;arcSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="480" y="100" width="310" height="220" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" value="&lt;font color=&quot;#1565C0&quot;&gt;&lt;b&gt;PK&lt;/b&gt;&lt;/font&gt; id_payment&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;bigint(20) AUTO_INCREMENT&lt;br&gt;&lt;font color=&quot;#C62828&quot;&gt;&lt;b&gt;FK&lt;/b&gt;&lt;/font&gt; id_pendaftar&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;bigint(20) NOT NULL&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;→ &lt;i&gt;tabel_pendaftar(id_pendaftar)&lt;/i&gt;&lt;br&gt;payment_method&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;enum(&#39;cash&#39;,&#39;qris&#39;) NOT NULL&lt;br&gt;status&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;enum(&#39;pending&#39;,&#39;paid&#39;,&#39;failed&#39;) DEFAULT &#39;pending&#39;&lt;br&gt;total&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;decimal(15,2) DEFAULT 0&lt;br&gt;created_at&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;timestamp NULL&lt;br&gt;updated_at&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;timestamp NULL&lt;br&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=10;fontFamily=Consolas;" parent="20" vertex="1">
+                    <mxGeometry x="10" y="35" width="290" height="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="30" value="tabel_kunjungan" style="swimlane;swimlaneFillColor=#E8F5E9;startSize=30;horizontal=1;rounded=1;arcSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="900" y="100" width="310" height="270" as="geometry"/>
+                </mxCell>
+                <mxCell id="31" value="&lt;font color=&quot;#1565C0&quot;&gt;&lt;b&gt;PK&lt;/b&gt;&lt;/font&gt; id_pengunjung&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;bigint(20) AUTO_INCREMENT&lt;br&gt;tanggal_daftar&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;date NOT NULL&lt;br&gt;tanggal_kunjungan&amp;nbsp;&amp;nbsp;&amp;nbsp;date NOT NULL&lt;br&gt;nama&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;varchar(255) NULL&lt;br&gt;nama_instansi&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;varchar(255) NULL&lt;br&gt;email&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;varchar(255) NOT NULL&lt;br&gt;tujuan_kunjungan&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;text NOT NULL&lt;br&gt;surat_pengajuan&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;varchar(255) NULL&lt;br&gt;jumlah_pengunjung&amp;nbsp;&amp;nbsp;int(11) DEFAULT 1&lt;br&gt;payment_method&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;varchar(255) NOT NULL&lt;br&gt;&lt;font color=&quot;#C62828&quot;&gt;&lt;b&gt;FK&lt;/b&gt;&lt;/font&gt; id_payment&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;bigint(20) NOT NULL&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;→ &lt;i&gt;tabel_payment(id_payment)&lt;/i&gt;&lt;br&gt;status_kunjungan&amp;nbsp;&amp;nbsp;&amp;nbsp;enum(&#39;waiting&#39;,&#39;completed&#39;) DEFAULT &#39;waiting&#39;&lt;br&gt;&lt;font color=&quot;#1565C0&quot;&gt;&lt;b&gt;UQ&lt;/b&gt;&lt;/font&gt; qr_token&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;varchar(255) NOT NULL&lt;br&gt;created_at&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;timestamp NULL&lt;br&gt;updated_at&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;timestamp NULL&lt;br&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=10;fontFamily=Consolas;" parent="30" vertex="1">
+                    <mxGeometry x="10" y="35" width="290" height="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="40" value="tabel_disable_day" style="swimlane;swimlaneFillColor=#FCE4EC;startSize=30;horizontal=1;rounded=1;arcSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="430" width="310" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="41" value="&lt;font color=&quot;#1565C0&quot;&gt;&lt;b&gt;PK&lt;/b&gt;&lt;/font&gt; id_disday&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;bigint(20) AUTO_INCREMENT&lt;br&gt;&lt;font color=&quot;#1565C0&quot;&gt;&lt;b&gt;UQ&lt;/b&gt;&lt;/font&gt; tanggal&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;date NOT NULL&lt;br&gt;keterangan&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;varchar(255) NULL&lt;br&gt;created_at&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;timestamp NULL&lt;br&gt;updated_at&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;timestamp NULL&lt;br&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=10;fontFamily=Consolas;" parent="40" vertex="1">
+                    <mxGeometry x="10" y="35" width="290" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="50" value="users" style="swimlane;swimlaneFillColor=#F3E5F5;startSize=30;horizontal=1;rounded=1;arcSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="480" y="430" width="310" height="195" as="geometry"/>
+                </mxCell>
+                <mxCell id="51" value="&lt;font color=&quot;#1565C0&quot;&gt;&lt;b&gt;PK&lt;/b&gt;&lt;/font&gt; id&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;bigint(20) AUTO_INCREMENT&lt;br&gt;nama&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;varchar(255) NOT NULL&lt;br&gt;&lt;font color=&quot;#1565C0&quot;&gt;&lt;b&gt;UQ&lt;/b&gt;&lt;/font&gt; email&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;varchar(255) NOT NULL&lt;br&gt;email_verified_at&amp;nbsp;&amp;nbsp;timestamp NULL&lt;br&gt;password&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;varchar(255) NOT NULL&lt;br&gt;role&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;varchar(255) DEFAULT &#39;admin&#39;&lt;br&gt;is_active&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;tinyint(1) DEFAULT 1&lt;br&gt;remember_token&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;varchar(100) NULL&lt;br&gt;created_at&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;timestamp NULL&lt;br&gt;updated_at&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;timestamp NULL&lt;br&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=10;fontFamily=Consolas;" parent="50" vertex="1">
+                    <mxGeometry x="10" y="35" width="290" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="70" value="sessions" style="swimlane;swimlaneFillColor=#F5F5F5;startSize=30;horizontal=1;rounded=1;arcSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="480" y="660" width="310" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="71" value="&lt;font color=&quot;#1565C0&quot;&gt;&lt;b&gt;PK&lt;/b&gt;&lt;/font&gt; id&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;varchar(255) NOT NULL&lt;br&gt;&lt;font color=&quot;#C62828&quot;&gt;&lt;b&gt;FK&lt;/b&gt;&lt;/font&gt; user_id&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;bigint(20) NULL &lt;font color=&quot;#666666&quot;&gt;INDEX&lt;/font&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;→ &lt;i&gt;users(id) ON DELETE SET NULL&lt;/i&gt;&lt;br&gt;ip_address&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;varchar(45) NULL&lt;br&gt;user_agent&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;text NULL&lt;br&gt;payload&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;longtext NOT NULL&lt;br&gt;last_activity&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;int(11) NOT NULL &lt;font color=&quot;#666666&quot;&gt;INDEX&lt;/font&gt;&lt;br&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=10;fontFamily=Consolas;" parent="70" vertex="1">
+                    <mxGeometry x="10" y="35" width="290" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="f1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#C62828;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="370" y="190" as="sourcePoint"/>
+                        <mxPoint x="480" y="190" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="f1l" value="1" style="ellipse;fillColor=#FFFFFF;strokeColor=#C62828;html=1;fontSize=10;fontColor=#C62828;" parent="1" vertex="1">
+                    <mxGeometry x="410" y="180" width="20" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="f1r" value="*" style="ellipse;fillColor=#FFFFFF;strokeColor=#C62828;html=1;fontSize=10;fontColor=#C62828;" parent="1" vertex="1">
+                    <mxGeometry x="450" y="180" width="20" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="f2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#C62828;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="790" y="190" as="sourcePoint"/>
+                        <mxPoint x="900" y="190" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="f2l" value="1" style="ellipse;fillColor=#FFFFFF;strokeColor=#C62828;html=1;fontSize=10;fontColor=#C62828;" parent="1" vertex="1">
+                    <mxGeometry x="830" y="180" width="20" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="f2r" value="*" style="ellipse;fillColor=#FFFFFF;strokeColor=#C62828;html=1;fontSize=10;fontColor=#C62828;" parent="1" vertex="1">
+                    <mxGeometry x="870" y="180" width="20" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="f3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#C62828;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="635" y="625" as="sourcePoint"/>
+                        <mxPoint x="635" y="660" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="f3l" value="1" style="ellipse;fillColor=#FFFFFF;strokeColor=#C62828;html=1;fontSize=10;fontColor=#C62828;" parent="1" vertex="1">
+                    <mxGeometry x="645" y="635" width="20" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="f3r" value="*" style="ellipse;fillColor=#FFFFFF;strokeColor=#C62828;html=1;fontSize=10;fontColor=#C62828;" parent="1" vertex="1">
+                    <mxGeometry x="645" y="650" width="20" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="80" value="Legend" style="swimlane;swimlaneFillColor=#FAFAFA;startSize=25;horizontal=1;rounded=1;arcSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="900" y="430" width="310" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="81" value="&lt;b&gt;Notasi:&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#1565C0&quot;&gt;&lt;b&gt;PK&lt;/b&gt;&lt;/font&gt; = Primary Key&lt;br&gt;&lt;font color=&quot;#C62828&quot;&gt;&lt;b&gt;FK&lt;/b&gt;&lt;/font&gt; = Foreign Key&lt;br&gt;&lt;font color=&quot;#1565C0&quot;&gt;&lt;b&gt;UQ&lt;/b&gt;&lt;/font&gt; = Unique Constraint&lt;br&gt;&lt;font color=&quot;#666666&quot;&gt;INDEX&lt;/font&gt; = Indexed Column&lt;br&gt;&lt;br&gt;&lt;b&gt;Relasi:&lt;/b&gt;&lt;br&gt;1 ────── * &amp;nbsp;(one-to-many)&lt;br&gt;&lt;br&gt;&lt;b&gt;Catatan:&lt;/b&gt;&lt;br&gt;Pending→Approved→Payment→Check-in&lt;br&gt;1 Pendaftar → maks 1 Payment&lt;br&gt;1 Payment → maks 1 Kunjungan&lt;br&gt;semua relasi menggunakan ON DELETE CASCADE" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=10;" parent="80" vertex="1">
+                    <mxGeometry x="10" y="25" width="290" height="180" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
